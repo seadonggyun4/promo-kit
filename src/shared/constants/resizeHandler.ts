@@ -1,4 +1,4 @@
-// width를 계산하는 함수
+export const RESIZE_HANDLER_SCRIPT = `// width를 계산하는 함수
 function calculateWidth(windowWidth) {
     const baseWidth = 200; // 1920px 환경에서의 기본값
     const referenceWidth = 1920; // 기준이 되는 화면 너비 (1920px)
@@ -30,8 +30,8 @@ function calculateHeight(documentHeight) {
 function updateElementDimensions(width, height) {
     const elements = document.querySelectorAll('#elementWrap'); // id가 elementWrap인 모든 요소 선택
     elements.forEach((element) => {
-        element.style.width = `${width}px`;
-        element.style.height = `${height}px`;
+        element.style.width = width + 'px';
+        element.style.height = height + 'px';
     });
 }
 
@@ -54,3 +54,4 @@ function updateElementDimensions(width, height) {
     // 초기 실행 시 한번 호출
     handleResize();
 })();
+`;

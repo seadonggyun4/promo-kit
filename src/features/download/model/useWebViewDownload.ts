@@ -1,5 +1,6 @@
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import { RESIZE_HANDLER_SCRIPT } from '@/shared/constants';
 
 export function useWebViewDownload(uploadedImage: string | ArrayBuffer | null, backgroundImage: string) {
     const webViewDownload = async (): Promise<void> => {
@@ -43,20 +44,12 @@ export function useWebViewDownload(uploadedImage: string | ArrayBuffer | null, b
               </head>
               <body>
                 ${newInnerHTML}
-                <script src="./resizeHandler.js" />
-                <script>
-                    initializeResizeListener()
-                </script>
+                <script src="./resizeHandler.js"></script>
               </body>
             </html>`;
 
             zip.file('webview.html', htmlTemplate);
-
-            // Fetch the resizeHandler.js constant
-            const resizeHandlerResponse = await fetch(`${import.meta.env.BASE_URL}resizeHandler.js`);
-            const resizeHandlerCode = await resizeHandlerResponse.text();
-
-            zip.file('resizeHandler.js', resizeHandlerCode);
+            zip.file('resizeHandler.js', RESIZE_HANDLER_SCRIPT);
 
             const imageSrc = uploadedImage ? uploadedImage.toString() : backgroundImage;
             fetch(imageSrc)
