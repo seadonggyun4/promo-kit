@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { MENU } from '@/shared/constants';
 import { ReactNode } from 'react';
@@ -9,6 +10,8 @@ interface MenuProps {
 }
 
 export function Menu({ menuActive, menuClick, children = null }: MenuProps) {
+    const { t } = useTranslation();
+
     return (
         <MenuStyle>
             <MenuList>
@@ -19,7 +22,7 @@ export function Menu({ menuActive, menuClick, children = null }: MenuProps) {
                             $isActive={item === menuActive}
                             onClick={() => menuClick(item)}
                         >
-                            {item}
+                            {t(`editor.${item}`)}
                         </MenuItem>
                     ))}
             </MenuList>

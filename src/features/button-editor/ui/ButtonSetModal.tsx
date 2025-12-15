@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { SimpleBtnForm } from './SimpleBtnForm';
 import { GradationBtnForm } from './GradationBtnForm';
@@ -12,6 +13,7 @@ interface ButtonSetModalProps {
 }
 
 export function ButtonSetModal({ selectedBtn, closeModal }: ButtonSetModalProps) {
+    const { t } = useTranslation();
     const { createSampleButton, updateSampleButton, selected } = useElementsStore();
     const simpleBtnHook = useSimpleBtn();
     const gradationBtnHook = useGradationBtn();
@@ -93,8 +95,8 @@ export function ButtonSetModal({ selectedBtn, closeModal }: ButtonSetModalProps)
                     {selectedBtn === 'SimpleBtn' && <SimpleBtnForm simpleBtnHook={simpleBtnHook} />}
                     {selectedBtn === 'GradationBtn' && <GradationBtnForm gradationBtnHook={gradationBtnHook} />}
                     <BtnWrapper>
-                        <button className="activeBtn" onClick={addButton}>등록</button>
-                        <button className="cancelBtn" onClick={closeModal}>취소</button>
+                        <button className="activeBtn" onClick={addButton}>{t('common.register')}</button>
+                        <button className="cancelBtn" onClick={closeModal}>{t('common.cancel')}</button>
                     </BtnWrapper>
                 </ElementSettingBox>
             </ModalInner>

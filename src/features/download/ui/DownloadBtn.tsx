@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { useWebViewDownload } from '../model';
 import backgroundImage from '@/shared/assets/promotionPage.jpeg';
@@ -12,6 +13,7 @@ interface DownloadBtnStyleProps {
 }
 
 export function DownloadBtn({ uploadedImage }: DownloadBtnProps) {
+    const { t } = useTranslation();
     const { webViewDownload } = useWebViewDownload(uploadedImage, backgroundImage);
     const [isDownloading, setIsDownloading] = useState(false);
 
@@ -31,11 +33,11 @@ export function DownloadBtn({ uploadedImage }: DownloadBtnProps) {
             onClick={handleBtnClick}
             $isDownloading={isDownloading}
             type="button"
-            aria-label="프로모션 페이지 다운로드 버튼"
+            aria-label={t('common.download')}
         >
             <div className="wrapper" aria-hidden>
                 <div className="front">
-                    <span>다운로드중</span>
+                    <span>{t('common.downloading')}</span>
                     <svg className="spinner" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                         <path d="M21 12a9 9 0 1 1-6.219-8.56" />
                     </svg>
@@ -45,7 +47,7 @@ export function DownloadBtn({ uploadedImage }: DownloadBtnProps) {
                 <div className="bottom"></div>
                 <div className="left"></div>
                 <div className="back">
-                    <span>페이지 다운로드</span>
+                    <span>{t('common.download')}</span>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                         <polyline points="7 10 12 15 17 10" />

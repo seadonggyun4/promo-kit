@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { UploadArea } from '@/features/image-upload';
 import { ButtonBox } from '@/features/button-editor';
@@ -8,11 +9,13 @@ interface ContentPanelProps {
 }
 
 export function ContentPanel({ menuActive }: ContentPanelProps) {
+    const { t } = useTranslation();
+
     return (
         <ContentPanelStyle>
             <PanelHeader>
                 <PanelTitle>
-                    {menuActive === MENU[0] ? '이미지 업로드' : '버튼 스타일'}
+                    {menuActive === MENU[0] ? t('editor.imageUpload') : t('editor.buttonStyle')}
                 </PanelTitle>
             </PanelHeader>
             <PanelContent>

@@ -1,4 +1,5 @@
 import { ChangeEvent, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useElementsStore } from "@/shared/store";
 import { GradationBtnHook } from "@/shared/types";
 import {
@@ -16,6 +17,7 @@ interface GradationBtnFormProps {
 }
 
 export function GradationBtnForm({ gradationBtnHook }: GradationBtnFormProps) {
+    const { t } = useTranslation();
     const selected = useElementsStore((state) => state.selected);
     const {
         menu,
@@ -51,6 +53,13 @@ export function GradationBtnForm({ gradationBtnHook }: GradationBtnFormProps) {
         handleShadowColorChange,
     } = gradationBtnHook;
 
+    const menuLabels = [
+        t('editor.menuText'),
+        t('editor.menuColor'),
+        t('editor.menuBorder'),
+        t('editor.menuShadow'),
+    ];
+
     useEffect(() => {
         if (selected?.id === '') return;
         handleTextChange({ target: { value: selected?.styleData.buttonText } } as ChangeEvent<HTMLInputElement>);
@@ -79,23 +88,23 @@ export function GradationBtnForm({ gradationBtnHook }: GradationBtnFormProps) {
                         className={item === menuActive ? "active" : ""}
                         onClick={() => setMenuActive(item)}
                     >
-                        {item}
+                        {menuLabels[index]}
                     </li>
                 ))}
             </ModalMenu>
             {menuActive === menu[0] && (
                 <SettingForm>
-                    <StyledLabel>버튼 텍스트</StyledLabel>
+                    <StyledLabel>{t('editor.buttonText')}</StyledLabel>
                     <StyledInput
                         type="text"
-                        placeholder="텍스트를 입력해 주세요."
+                        placeholder={t('editor.buttonTextPlaceholder')}
                         value={buttonText}
                         onChange={handleTextChange}
                     />
-                    <StyledLabel>버튼 링크</StyledLabel>
+                    <StyledLabel>{t('editor.buttonLink')}</StyledLabel>
                     <StyledInput
                         type="url"
-                        placeholder="링크를 입력해 주세요."
+                        placeholder={t('editor.buttonLinkPlaceholder')}
                         value={buttonLink}
                         onChange={handleLinkChange}
                     />
@@ -103,9 +112,9 @@ export function GradationBtnForm({ gradationBtnHook }: GradationBtnFormProps) {
             )}
             {menuActive === menu[1] && (
                 <SettingForm>
-                    <StyledLabel>텍스트 색상</StyledLabel>
+                    <StyledLabel>{t('editor.textColor')}</StyledLabel>
                     <ColorPicker value={textColor} onChange={handleTextColorChange} />
-                    <StyledLabel>그라데이션 색상</StyledLabel>
+                    <StyledLabel>{t('editor.gradationColor')}</StyledLabel>
                     <ColorGrid>
                         <ColorGridItem>
                             <ColorPicker value={gradationColor1} onChange={handleGradationColor1Change} />
@@ -124,7 +133,7 @@ export function GradationBtnForm({ gradationBtnHook }: GradationBtnFormProps) {
             )}
             {menuActive === menu[2] && (
                 <SettingForm>
-                    <StyledLabel>테두리 곡선</StyledLabel>
+                    <StyledLabel>{t('editor.borderRadius')}</StyledLabel>
                     <input
                         type="range"
                         min="0"
@@ -132,7 +141,7 @@ export function GradationBtnForm({ gradationBtnHook }: GradationBtnFormProps) {
                         value={borderRadius}
                         onChange={handleBorderRadiusChange}
                     />
-                    <StyledLabel>테두리 두께</StyledLabel>
+                    <StyledLabel>{t('editor.borderWidth')}</StyledLabel>
                     <input
                         type="range"
                         min="0"
@@ -140,13 +149,13 @@ export function GradationBtnForm({ gradationBtnHook }: GradationBtnFormProps) {
                         value={borderWidth}
                         onChange={handleBorderWidthChange}
                     />
-                    <StyledLabel>테두리 색상</StyledLabel>
+                    <StyledLabel>{t('editor.borderColor')}</StyledLabel>
                     <ColorPicker value={borderColor} onChange={handleBorderColorChange} />
                 </SettingForm>
             )}
             {menuActive === menu[3] && (
                 <SettingForm>
-                    <StyledLabel>그림자 X축</StyledLabel>
+                    <StyledLabel>{t('editor.shadowX')}</StyledLabel>
                     <input
                         type="range"
                         min="0"
@@ -154,7 +163,7 @@ export function GradationBtnForm({ gradationBtnHook }: GradationBtnFormProps) {
                         value={shadowOffsetX}
                         onChange={handleShadowOffsetXChange}
                     />
-                    <StyledLabel>그림자 Y축</StyledLabel>
+                    <StyledLabel>{t('editor.shadowY')}</StyledLabel>
                     <input
                         type="range"
                         min="0"
@@ -162,7 +171,7 @@ export function GradationBtnForm({ gradationBtnHook }: GradationBtnFormProps) {
                         value={shadowOffsetY}
                         onChange={handleShadowOffsetYChange}
                     />
-                    <StyledLabel>그림자 블러</StyledLabel>
+                    <StyledLabel>{t('editor.shadowBlur')}</StyledLabel>
                     <input
                         type="range"
                         min="0"
@@ -170,7 +179,7 @@ export function GradationBtnForm({ gradationBtnHook }: GradationBtnFormProps) {
                         value={shadowBlurRadius}
                         onChange={handleShadowBlurRadiusChange}
                     />
-                    <StyledLabel>그림자 색상</StyledLabel>
+                    <StyledLabel>{t('editor.shadowColor')}</StyledLabel>
                     <ColorPicker value={shadowColor} onChange={handleShadowColorChange} />
                 </SettingForm>
             )}

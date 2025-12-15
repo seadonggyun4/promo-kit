@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Header } from '@/pages/editor/ui/Header';
 import bannerImg from '@/asset/img/promokit_baner.png';
 
 export function HomePage() {
+    const { t } = useTranslation();
+
     return (
         <>
             <Header />
@@ -14,11 +17,12 @@ export function HomePage() {
                     </GradientBackground>
                     <HeroContent>
                         <CatchPhrase>
-                            <HeroTitle>프로모션 페이지,<br />클릭 몇 번으로 완성</HeroTitle>
-                            <HeroDescription>
-                                복잡한 코딩 없이 드래그 앤 드롭만으로<br />
-                                전문가 수준의 프로모션 페이지를 만들어보세요
-                            </HeroDescription>
+                            <HeroTitle>{t('home.heroTitle').split('\n').map((line, i) => (
+                                <span key={i}>{line}{i === 0 && <br />}</span>
+                            ))}</HeroTitle>
+                            <HeroDescription>{t('home.heroDescription').split('\n').map((line, i) => (
+                                <span key={i}>{line}{i === 0 && <br />}</span>
+                            ))}</HeroDescription>
                         </CatchPhrase>
                         <BannerImage src={bannerImg} alt="PromoKit Banner" />
                     </HeroContent>
@@ -33,12 +37,8 @@ export function HomePage() {
                                 <path d="M2 12l10 5 10-5" />
                             </svg>
                         </SectionIcon>
-                        <SectionTitle>목적</SectionTitle>
-                        <SectionDescription>
-                            PromoKit은 디자인 경험이 없어도 누구나 쉽게
-                            프로모션 페이지를 제작할 수 있도록 도와주는
-                            웹 기반 에디터입니다.
-                        </SectionDescription>
+                        <SectionTitle>{t('home.purposeTitle')}</SectionTitle>
+                        <SectionDescription>{t('home.purposeDescription')}</SectionDescription>
                     </Section>
 
                     <Section>
@@ -49,12 +49,12 @@ export function HomePage() {
                                 <polyline points="21 15 16 10 5 21" />
                             </svg>
                         </SectionIcon>
-                        <SectionTitle>주요 기능</SectionTitle>
+                        <SectionTitle>{t('home.featuresTitle')}</SectionTitle>
                         <FeatureList>
-                            <FeatureItem>드래그 앤 드롭으로 버튼 배치</FeatureItem>
-                            <FeatureItem>다양한 버튼 스타일 커스터마이징</FeatureItem>
-                            <FeatureItem>실시간 미리보기</FeatureItem>
-                            <FeatureItem>이미지로 내보내기</FeatureItem>
+                            <FeatureItem>{t('home.feature1')}</FeatureItem>
+                            <FeatureItem>{t('home.feature2')}</FeatureItem>
+                            <FeatureItem>{t('home.feature3')}</FeatureItem>
+                            <FeatureItem>{t('home.feature4')}</FeatureItem>
                         </FeatureList>
                     </Section>
 
@@ -68,31 +68,31 @@ export function HomePage() {
                                 <polyline points="10 9 9 9 8 9" />
                             </svg>
                         </SectionIcon>
-                        <SectionTitle>사용 방법</SectionTitle>
+                        <SectionTitle>{t('home.usageTitle')}</SectionTitle>
                         <StepList>
                             <StepItem>
                                 <StepNumber>1</StepNumber>
-                                <StepText>배경 이미지를 업로드하세요</StepText>
+                                <StepText>{t('home.step1')}</StepText>
                             </StepItem>
                             <StepItem>
                                 <StepNumber>2</StepNumber>
-                                <StepText>원하는 스타일의 버튼을 선택하세요</StepText>
+                                <StepText>{t('home.step2')}</StepText>
                             </StepItem>
                             <StepItem>
                                 <StepNumber>3</StepNumber>
-                                <StepText>버튼을 드래그하여 원하는 위치에 배치하세요</StepText>
+                                <StepText>{t('home.step3')}</StepText>
                             </StepItem>
                             <StepItem>
                                 <StepNumber>4</StepNumber>
-                                <StepText>내보내기 버튼을 눌러 이미지로 저장하세요</StepText>
+                                <StepText>{t('home.step4')}</StepText>
                             </StepItem>
                         </StepList>
                     </Section>
                 </SectionContainer>
 
                 <CTASection>
-                    <CTATitle>지금 바로 시작해보세요!</CTATitle>
-                    <StartButton to="/editor" $large>에디터 열기</StartButton>
+                    <CTATitle>{t('home.ctaTitle')}</CTATitle>
+                    <StartButton to="/editor" $large>{t('home.openEditor')}</StartButton>
                 </CTASection>
             </MainStyle>
         </>

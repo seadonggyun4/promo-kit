@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useUploadImageStore } from '@/shared/store';
 
 interface UploadAreaStyleProps {
@@ -7,6 +8,7 @@ interface UploadAreaStyleProps {
 }
 
 export function UploadArea() {
+    const { t } = useTranslation();
     const { handleDrop, handleDragOver, handleFileSelect } = useUploadImageStore();
     const [isDraggedOver, setIsDraggedOver] = useState(false);
 
@@ -38,7 +40,9 @@ export function UploadArea() {
                     </svg>
                 </UploadIcon>
                 <UploadText>
-                    이미지 파일을<br />드래그 해주세요
+                    {t('editor.dragImage').split('\n').map((line, i) => (
+                        <span key={i}>{line}{i === 0 && <br />}</span>
+                    ))}
                 </UploadText>
             </UploadAreaStyle>
             <input
@@ -49,7 +53,7 @@ export function UploadArea() {
                 onChange={handleFileSelect}
             />
             <UploadBtn htmlFor="promotionPage-upload">
-                파일 선택하기
+                {t('editor.selectFile')}
             </UploadBtn>
         </UploadWrapper>
     );

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { ELEMENT_MENU } from '@/shared/constants';
 import backgroundImage from '@/shared/assets/promotionPage.jpeg';
@@ -59,6 +60,7 @@ const renderButton = (style: ButtonStyle, styleData: ButtonStyleDataLegacy): Rea
 };
 
 export function Webview({ elementsData, uploadedImage }: WebviewProps) {
+    const { t } = useTranslation();
     const { updateElementPosition, setSelected, removeElement } = useElementsStore();
     const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
     const [menuActive, setMenuActive] = useState('');
@@ -110,8 +112,8 @@ export function Webview({ elementsData, uploadedImage }: WebviewProps) {
     };
 
     const elementMenuClick = (data: ElementData, menu: string) => {
-        if (menu === '수정') setSelected(data);
-        if (menu === '삭제') removeElement(data?.id);
+        if (menu === 'edit') setSelected(data);
+        if (menu === 'delete') removeElement(data?.id);
     };
 
     return (
@@ -120,7 +122,7 @@ export function Webview({ elementsData, uploadedImage }: WebviewProps) {
                 <WebViewImage
                     id="rending"
                     src={uploadedImage ? uploadedImage.toString() : backgroundImage}
-                    alt="프로모션 페이지 이미지"
+                    alt={t('editor.promotionPageImage')}
                 />
                 <ElementsBox id="elementsBox" onDragOver={handleDragOver} onDrop={handleDrop}>
                     {elementsData.map((data, index) => (
@@ -139,7 +141,7 @@ export function Webview({ elementsData, uploadedImage }: WebviewProps) {
                                         ELEMENT_MENU[data.type as keyof typeof ELEMENT_MENU].map(
                                             (menu, index) => (
                                                 <li key={index} onClick={() => elementMenuClick(data, menu)}>
-                                                    {menu}
+                                                    {t(`common.${menu}`)}
                                                 </li>
                                             )
                                         )}

@@ -1,4 +1,5 @@
 import { ChangeEvent, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useElementsStore } from "@/shared/store";
 import { SimpleBtnHook } from "@/shared/types";
 import {
@@ -14,6 +15,7 @@ interface SimpleBtnFormProps {
 }
 
 export function SimpleBtnForm({ simpleBtnHook }: SimpleBtnFormProps) {
+    const { t } = useTranslation();
     const selected = useElementsStore((state) => state.selected);
     const {
         menu,
@@ -43,6 +45,13 @@ export function SimpleBtnForm({ simpleBtnHook }: SimpleBtnFormProps) {
         handleShadowColorChange,
     } = simpleBtnHook;
 
+    const menuLabels = [
+        t('editor.menuText'),
+        t('editor.menuColor'),
+        t('editor.menuBorder'),
+        t('editor.menuShadow'),
+    ];
+
     useEffect(() => {
         if (selected?.id === '') return;
         handleTextChange({ target: { value: selected?.styleData.buttonText } } as ChangeEvent<HTMLInputElement>);
@@ -68,23 +77,23 @@ export function SimpleBtnForm({ simpleBtnHook }: SimpleBtnFormProps) {
                         className={item === menuActive ? "active" : ""}
                         onClick={() => setMenuActive(item)}
                     >
-                        {item}
+                        {menuLabels[index]}
                     </li>
                 ))}
             </ModalMenu>
             {menuActive === menu[0] && (
                 <SettingForm>
-                    <StyledLabel>버튼 텍스트</StyledLabel>
+                    <StyledLabel>{t('editor.buttonText')}</StyledLabel>
                     <StyledInput
                         type="text"
-                        placeholder="텍스트를 입력해 주세요."
+                        placeholder={t('editor.buttonTextPlaceholder')}
                         value={buttonText}
                         onChange={handleTextChange}
                     />
-                    <StyledLabel>버튼 링크</StyledLabel>
+                    <StyledLabel>{t('editor.buttonLink')}</StyledLabel>
                     <StyledInput
                         type="url"
-                        placeholder="링크를 입력해 주세요."
+                        placeholder={t('editor.buttonLinkPlaceholder')}
                         value={buttonLink}
                         onChange={handleLinkChange}
                     />
@@ -92,15 +101,15 @@ export function SimpleBtnForm({ simpleBtnHook }: SimpleBtnFormProps) {
             )}
             {menuActive === menu[1] && (
                 <SettingForm>
-                    <StyledLabel>텍스트 색상</StyledLabel>
+                    <StyledLabel>{t('editor.textColor')}</StyledLabel>
                     <ColorPicker value={textColor} onChange={handleTextColorChange} />
-                    <StyledLabel>버튼 색상</StyledLabel>
+                    <StyledLabel>{t('editor.buttonColor')}</StyledLabel>
                     <ColorPicker value={backgroundColor} onChange={handleBackgroundColorChange} />
                 </SettingForm>
             )}
             {menuActive === menu[2] && (
                 <SettingForm>
-                    <StyledLabel>테두리 곡선</StyledLabel>
+                    <StyledLabel>{t('editor.borderRadius')}</StyledLabel>
                     <input
                         type="range"
                         min="0"
@@ -108,7 +117,7 @@ export function SimpleBtnForm({ simpleBtnHook }: SimpleBtnFormProps) {
                         value={borderRadius}
                         onChange={handleBorderRadiusChange}
                     />
-                    <StyledLabel>테두리 두께</StyledLabel>
+                    <StyledLabel>{t('editor.borderWidth')}</StyledLabel>
                     <input
                         type="range"
                         min="0"
@@ -116,13 +125,13 @@ export function SimpleBtnForm({ simpleBtnHook }: SimpleBtnFormProps) {
                         value={borderWidth}
                         onChange={handleBorderWidthChange}
                     />
-                    <StyledLabel>테두리 색상</StyledLabel>
+                    <StyledLabel>{t('editor.borderColor')}</StyledLabel>
                     <ColorPicker value={borderColor} onChange={handleBorderColorChange} />
                 </SettingForm>
             )}
             {menuActive === menu[3] && (
                 <SettingForm>
-                    <StyledLabel>그림자 X축</StyledLabel>
+                    <StyledLabel>{t('editor.shadowX')}</StyledLabel>
                     <input
                         type="range"
                         min="0"
@@ -130,7 +139,7 @@ export function SimpleBtnForm({ simpleBtnHook }: SimpleBtnFormProps) {
                         value={shadowOffsetX}
                         onChange={handleShadowOffsetXChange}
                     />
-                    <StyledLabel>그림자 Y축</StyledLabel>
+                    <StyledLabel>{t('editor.shadowY')}</StyledLabel>
                     <input
                         type="range"
                         min="0"
@@ -138,7 +147,7 @@ export function SimpleBtnForm({ simpleBtnHook }: SimpleBtnFormProps) {
                         value={shadowOffsetY}
                         onChange={handleShadowOffsetYChange}
                     />
-                    <StyledLabel>그림자 블러</StyledLabel>
+                    <StyledLabel>{t('editor.shadowBlur')}</StyledLabel>
                     <input
                         type="range"
                         min="0"
@@ -146,7 +155,7 @@ export function SimpleBtnForm({ simpleBtnHook }: SimpleBtnFormProps) {
                         value={shadowBlurRadius}
                         onChange={handleShadowBlurRadiusChange}
                     />
-                    <StyledLabel>그림자 색상</StyledLabel>
+                    <StyledLabel>{t('editor.shadowColor')}</StyledLabel>
                     <ColorPicker value={shadowColor} onChange={handleShadowColorChange} />
                 </SettingForm>
             )}
