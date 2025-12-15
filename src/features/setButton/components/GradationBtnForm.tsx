@@ -6,10 +6,10 @@ import {
     SettingForm,
     StyledLabel,
     StyledInput,
-    StyledColorLabel,
-    ColorInputWrapper,
-    HiddenColorInput,
+    ColorGrid,
+    ColorGridItem,
 } from "./FormStyles";
+import ColorPicker from "./ColorPicker";
 
 function GradationBtnForm({gradationBtnHook}: { gradationBtnHook: GradationBtnHook }) {
     const { selected } = useElementsContext()
@@ -98,55 +98,23 @@ function GradationBtnForm({gradationBtnHook}: { gradationBtnHook: GradationBtnHo
                 menuActive === menu[1] &&
                 <SettingForm>
                     <StyledLabel>텍스트 색상</StyledLabel>
-                    <ColorInputWrapper>
-                        <StyledColorLabel htmlFor="textColorInput" style={{backgroundColor: textColor}}>클릭후 색상을 선택해주세요.</StyledColorLabel>
-                        <HiddenColorInput
-                            id="textColorInput"
-                            type="color"
-                            value={textColor}
-                            onChange={handleTextColorChange}
-                        />
-                    </ColorInputWrapper>
-                    <StyledLabel>첫번째 그라데이션 색상</StyledLabel>
-                    <ColorInputWrapper>
-                        <StyledColorLabel htmlFor="gradation1ColorInput" style={{backgroundColor: gradationColor1}}>클릭후 색상을 선택해주세요.</StyledColorLabel>
-                        <HiddenColorInput
-                            id="gradation1ColorInput"
-                            type="color"
-                            value={gradationColor1}
-                            onChange={handleGradationColor1Change}
-                        />
-                    </ColorInputWrapper>
-                    <StyledLabel>두번째 그라데이션 색상</StyledLabel>
-                    <ColorInputWrapper>
-                        <StyledColorLabel htmlFor="gradation2ColorInput" style={{backgroundColor: gradationColor2}}>클릭후 색상을 선택해주세요.</StyledColorLabel>
-                        <HiddenColorInput
-                            id="gradation2ColorInput"
-                            type="color"
-                            value={gradationColor2}
-                            onChange={handleGradationColor2Change}
-                        />
-                    </ColorInputWrapper>
-                    <StyledLabel>세번째 그라데이션 색상</StyledLabel>
-                    <ColorInputWrapper>
-                        <StyledColorLabel htmlFor="gradation3ColorInput" style={{backgroundColor: gradationColor3}}>클릭후 색상을 선택해주세요.</StyledColorLabel>
-                        <HiddenColorInput
-                            id="gradation3ColorInput"
-                            type="color"
-                            value={gradationColor3}
-                            onChange={handleGradationColor3Change}
-                        />
-                    </ColorInputWrapper>
-                    <StyledLabel>네번째 그라데이션 색상</StyledLabel>
-                    <ColorInputWrapper>
-                        <StyledColorLabel htmlFor="gradation4ColorInput" style={{backgroundColor: gradationColor4}}>클릭후 색상을 선택해주세요.</StyledColorLabel>
-                        <HiddenColorInput
-                            id="gradation4ColorInput"
-                            type="color"
-                            value={gradationColor4}
-                            onChange={handleGradationColor4Change}
-                        />
-                    </ColorInputWrapper>
+                    <ColorPicker value={textColor} onChange={handleTextColorChange} />
+
+                    <StyledLabel>그라데이션 색상</StyledLabel>
+                    <ColorGrid>
+                        <ColorGridItem>
+                            <ColorPicker value={gradationColor1} onChange={handleGradationColor1Change} />
+                        </ColorGridItem>
+                        <ColorGridItem>
+                            <ColorPicker value={gradationColor2} onChange={handleGradationColor2Change} />
+                        </ColorGridItem>
+                        <ColorGridItem>
+                            <ColorPicker value={gradationColor3} onChange={handleGradationColor3Change} />
+                        </ColorGridItem>
+                        <ColorGridItem>
+                            <ColorPicker value={gradationColor4} onChange={handleGradationColor4Change} />
+                        </ColorGridItem>
+                    </ColorGrid>
                 </SettingForm>
             }
             {
@@ -169,14 +137,7 @@ function GradationBtnForm({gradationBtnHook}: { gradationBtnHook: GradationBtnHo
                         onChange={handleBorderWidthChange}
                     />
                     <StyledLabel>테두리 색상</StyledLabel>
-                    <ColorInputWrapper>
-                        <StyledColorLabel htmlFor="borderColorInput" style={{backgroundColor: borderColor}}>클릭후 색상을 선택해주세요.</StyledColorLabel>
-                        <HiddenColorInput
-                            id="borderColorInput"
-                            type="color"
-                            onChange={handleBorderColorChange}
-                        />
-                    </ColorInputWrapper>
+                    <ColorPicker value={borderColor} onChange={handleBorderColorChange} />
                 </SettingForm>
             }
             {
@@ -196,7 +157,7 @@ function GradationBtnForm({gradationBtnHook}: { gradationBtnHook: GradationBtnHo
                         max="20"
                         value={shadowOffsetY}
                         onChange={handleShadowOffsetYChange}/>
-                    <StyledLabel>그림자 Z축</StyledLabel>
+                    <StyledLabel>그림자 블러</StyledLabel>
                     <input
                         type="range"
                         min="0"
@@ -204,14 +165,7 @@ function GradationBtnForm({gradationBtnHook}: { gradationBtnHook: GradationBtnHo
                         value={shadowBlurRadius}
                         onChange={handleShadowBlurRadiusChange}/>
                     <StyledLabel>그림자 색상</StyledLabel>
-                    <ColorInputWrapper>
-                        <StyledColorLabel htmlFor="shadowColorInput" style={{backgroundColor: shadowColor}}>클릭후 색상을 선택해주세요.</StyledColorLabel>
-                        <HiddenColorInput
-                            id="shadowColorInput"
-                            type="color"
-                            onChange={handleShadowColorChange}
-                        />
-                    </ColorInputWrapper>
+                    <ColorPicker value={shadowColor} onChange={handleShadowColorChange} />
                 </SettingForm>
             }
         </>

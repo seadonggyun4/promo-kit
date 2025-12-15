@@ -4,6 +4,10 @@ import Main from "./Main";
 import {UploadImageProvider } from "../features/uploadImage/provider/UploadImageProvider";
 import  {ElementsProvider} from "../app/provider/ElementsProvider";
 
+// toast
+import 'seo-toast';
+import 'seo-toast/styles';
+
 function App(){
     return (
         <div className="App">
@@ -12,6 +16,7 @@ function App(){
                         <Main />
                 </ElementsProvider>
             </UploadImageProvider>
+            <seo-toast position="top-right" />
         </div>
     )
 }

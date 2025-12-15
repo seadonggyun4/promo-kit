@@ -6,10 +6,8 @@ import {
     SettingForm,
     StyledLabel,
     StyledInput,
-    StyledColorLabel,
-    ColorInputWrapper,
-    HiddenColorInput,
 } from "./FormStyles";
+import ColorPicker from "./ColorPicker";
 
 function SimpleBtnForm({simpleBtnHook}: { simpleBtnHook: SimpleBtnHook }) {
     const { selected } = useElementsContext()
@@ -89,25 +87,9 @@ function SimpleBtnForm({simpleBtnHook}: { simpleBtnHook: SimpleBtnHook }) {
                 menuActive === menu[1] &&
                 <SettingForm>
                     <StyledLabel>텍스트 색상</StyledLabel>
-                    <ColorInputWrapper>
-                        <StyledColorLabel htmlFor="textColorInput" style={{backgroundColor: textColor}}>클릭후 색상을 선택해주세요.</StyledColorLabel>
-                        <HiddenColorInput
-                            id="textColorInput"
-                            type="color"
-                            value={textColor}
-                            onChange={handleTextColorChange}
-                        />
-                    </ColorInputWrapper>
+                    <ColorPicker value={textColor} onChange={handleTextColorChange} />
                     <StyledLabel>버튼 색상</StyledLabel>
-                    <ColorInputWrapper>
-                        <StyledColorLabel htmlFor="backgroundColorInput" style={{backgroundColor}}>클릭후 색상을 선택해주세요.</StyledColorLabel>
-                        <HiddenColorInput
-                            id="backgroundColorInput"
-                            type="color"
-                            value={backgroundColor}
-                            onChange={handleBackgroundColorChange}
-                        />
-                    </ColorInputWrapper>
+                    <ColorPicker value={backgroundColor} onChange={handleBackgroundColorChange} />
                 </SettingForm>
             }
             {
@@ -130,14 +112,7 @@ function SimpleBtnForm({simpleBtnHook}: { simpleBtnHook: SimpleBtnHook }) {
                         onChange={handleBorderWidthChange}
                     />
                     <StyledLabel>테두리 색상</StyledLabel>
-                    <ColorInputWrapper>
-                        <StyledColorLabel htmlFor="borderColorInput" style={{backgroundColor: borderColor}}>클릭후 색상을 선택해주세요.</StyledColorLabel>
-                        <HiddenColorInput
-                            id="borderColorInput"
-                            type="color"
-                            onChange={handleBorderColorChange}
-                        />
-                    </ColorInputWrapper>
+                    <ColorPicker value={borderColor} onChange={handleBorderColorChange} />
                 </SettingForm>
             }
             {
@@ -157,7 +132,7 @@ function SimpleBtnForm({simpleBtnHook}: { simpleBtnHook: SimpleBtnHook }) {
                         max="20"
                         value={shadowOffsetY}
                         onChange={handleShadowOffsetYChange}/>
-                    <StyledLabel>그림자 Z축</StyledLabel>
+                    <StyledLabel>그림자 블러</StyledLabel>
                     <input
                         type="range"
                         min="0"
@@ -165,14 +140,7 @@ function SimpleBtnForm({simpleBtnHook}: { simpleBtnHook: SimpleBtnHook }) {
                         value={shadowBlurRadius}
                         onChange={handleShadowBlurRadiusChange}/>
                     <StyledLabel>그림자 색상</StyledLabel>
-                    <ColorInputWrapper>
-                        <StyledColorLabel htmlFor="shadowColorInput" style={{backgroundColor: shadowColor}}>클릭후 색상을 선택해주세요.</StyledColorLabel>
-                        <HiddenColorInput
-                            id="shadowColorInput"
-                            type="color"
-                            onChange={handleShadowColorChange}
-                        />
-                    </ColorInputWrapper>
+                    <ColorPicker value={shadowColor} onChange={handleShadowColorChange} />
                 </SettingForm>
             }
         </>
