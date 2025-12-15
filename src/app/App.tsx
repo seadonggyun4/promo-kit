@@ -1,24 +1,15 @@
-import Main from "./Main";
+import { EditorPage } from '@/pages';
 
-//provider
-import {UploadImageProvider } from "../features/uploadImage/provider/UploadImageProvider";
-import  {ElementsProvider} from "../app/provider/ElementsProvider";
-
-// toast
 import 'seo-toast';
 import 'seo-toast/styles';
 
-function App(){
+function App() {
     return (
         <div className="App">
-            <UploadImageProvider >
-                <ElementsProvider>
-                        <Main />
-                </ElementsProvider>
-            </UploadImageProvider>
+            <EditorPage />
             <seo-toast position="top-right" />
         </div>
-    )
+    );
 }
 
 export default App;
