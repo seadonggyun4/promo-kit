@@ -2,12 +2,26 @@
     "common": {
         "home": "ホーム",
         "editor": "エディター",
-        "download": "ページダウンロード",
+        "download": "ダウンロード",
         "downloading": "ダウンロード中",
         "register": "登録",
         "cancel": "キャンセル",
         "edit": "編集",
         "delete": "削除"
+    },
+    "download": {
+        "title": "コードエクスポート",
+        "selectFramework": "フレームワーク選択",
+        "selectStyle": "スタイル方式選択",
+        "vanillaHtml": "HTML/CSS",
+        "react": "React",
+        "vue": "Vue",
+        "css": "CSS",
+        "scss": "SCSS",
+        "styledComponents": "Styled Components",
+        "emotion": "Emotion",
+        "tailwind": "Tailwind CSS",
+        "info": "生成されたコードにはボタンスタイルと位置が含まれています。画像ファイルはプロジェクトに別途追加してください。"
     },
     "home": {
         "heroTitle": "プロモーションページを\n数クリックで完成",

@@ -18,7 +18,7 @@ export function EditorPage() {
                     <Menu
                         menuActive={isActive}
                         menuClick={activeMenu}
-                        children={<DownloadBtn uploadedImage={uploadedImage} />}
+                        children={<DownloadBtn uploadedImage={uploadedImage} elementsData={elementsData} />}
                     />
                 </ToolbarSection>
                 <ContentStyle>

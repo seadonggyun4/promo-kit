@@ -2,12 +2,26 @@
     "common": {
         "home": "홈",
         "editor": "에디터",
-        "download": "페이지 다운로드",
+        "download": "다운로드",
         "downloading": "다운로드중",
         "register": "등록",
         "cancel": "취소",
         "edit": "수정",
         "delete": "삭제"
+    },
+    "download": {
+        "title": "코드 내보내기",
+        "selectFramework": "프레임워크 선택",
+        "selectStyle": "스타일 방식 선택",
+        "vanillaHtml": "HTML/CSS",
+        "react": "React",
+        "vue": "Vue",
+        "css": "CSS",
+        "scss": "SCSS",
+        "styledComponents": "Styled Components",
+        "emotion": "Emotion",
+        "tailwind": "Tailwind CSS",
+        "info": "생성된 코드에는 버튼 스타일과 위치가 포함됩니다. 이미지 파일은 프로젝트에 별도로 추가해주세요."
     },
     "home": {
         "heroTitle": "프로모션 페이지,\n클릭 몇 번으로 완성",

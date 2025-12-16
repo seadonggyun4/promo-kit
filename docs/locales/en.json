@@ -2,12 +2,26 @@
     "common": {
         "home": "Home",
         "editor": "Editor",
-        "download": "Download Page",
+        "download": "Download",
         "downloading": "Downloading",
         "register": "Register",
         "cancel": "Cancel",
         "edit": "Edit",
         "delete": "Delete"
+    },
+    "download": {
+        "title": "Export Code",
+        "selectFramework": "Select Framework",
+        "selectStyle": "Select Style",
+        "vanillaHtml": "HTML/CSS",
+        "react": "React",
+        "vue": "Vue",
+        "css": "CSS",
+        "scss": "SCSS",
+        "styledComponents": "Styled Components",
+        "emotion": "Emotion",
+        "tailwind": "Tailwind CSS",
+        "info": "Generated code includes button styles and positions. Import the image file separately into your project."
     },
     "home": {
         "heroTitle": "Create Promotion Pages\nWith Just a Few Clicks",
