@@ -50,6 +50,9 @@
         "menuColor": "Color",
         "menuBorder": "Border",
         "menuShadow": "Shadow",
+        "menuSize": "Size",
+        "width": "Width",
+        "height": "Height",
         "promotionPageImage": "Promotion page image",
         "solidButtons": "Solid Buttons",
         "gradientButtons": "Gradient Buttons"

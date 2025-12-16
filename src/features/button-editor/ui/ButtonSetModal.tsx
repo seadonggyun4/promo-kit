@@ -44,6 +44,8 @@ export function ButtonSetModal({ selectedBtn, closeModal }: ButtonSetModalProps)
                     target="_blank"
                     onClick={(e) => e.preventDefault()}
                     style={{
+                        width: `${style.width}px`,
+                        height: `${style.height}px`,
                         borderWidth: `${style.borderWidth}px`,
                         borderStyle: 'solid',
                         borderColor: style.borderColor,
@@ -68,6 +70,8 @@ export function ButtonSetModal({ selectedBtn, closeModal }: ButtonSetModalProps)
                 target="_blank"
                 onClick={(e) => e.preventDefault()}
                 style={{
+                    width: `${style.width}px`,
+                    height: `${style.height}px`,
                     borderWidth: `${style.borderWidth}px`,
                     borderStyle: 'solid',
                     borderColor: style.borderColor,
@@ -95,9 +99,7 @@ export function ButtonSetModal({ selectedBtn, closeModal }: ButtonSetModalProps)
         <ModalWrapper>
             <ModalInner>
                 <ElementWrapper>
-                    <div style={{ width: '200px' }}>
-                        {renderPreviewButton()}
-                    </div>
+                    {renderPreviewButton()}
                 </ElementWrapper>
                 <ElementSettingBox>
                     {isSimpleBtn && <SimpleBtnForm simpleBtnHook={simpleBtnHook} />}

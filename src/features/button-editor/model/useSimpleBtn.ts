@@ -17,6 +17,8 @@ export function useSimpleBtn(styleName?: string) {
         shadowOffsetY: initialStyle.shadowOffsetY,
         shadowBlurRadius: initialStyle.shadowBlurRadius,
         shadowColor: initialStyle.shadowColor,
+        width: initialStyle.width,
+        height: initialStyle.height,
     });
 
     // SimpleBtn 전용 상태
@@ -54,6 +56,10 @@ export function useSimpleBtn(styleName?: string) {
         handleShadowBlurRadiusChange: baseForm.handleShadowBlurRadiusChange,
         shadowColor: baseForm.shadowColor,
         handleShadowColorChange: baseForm.handleShadowColorChange,
+        width: baseForm.width,
+        handleWidthChange: baseForm.handleWidthChange,
+        height: baseForm.height,
+        handleHeightChange: baseForm.handleHeightChange,
 
         // SimpleBtn 전용
         backgroundColor,

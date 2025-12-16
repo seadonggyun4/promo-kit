@@ -45,6 +45,8 @@ export interface SimpleBtnStyleData {
     shadowOffsetY: string;
     shadowBlurRadius: string;
     shadowColor: string;
+    width: string;
+    height: string;
 }
 
 export interface GradationBtnStyleData {
@@ -62,6 +64,8 @@ export interface GradationBtnStyleData {
     shadowOffsetY: string;
     shadowBlurRadius: string;
     shadowColor: string;
+    width: string;
+    height: string;
 }
 
 export type ButtonStyleData = SimpleBtnStyleData | GradationBtnStyleData;
@@ -116,6 +120,8 @@ export interface ButtonFormState {
     shadowOffsetY: string;
     shadowBlurRadius: string;
     shadowColor: string;
+    width: string;
+    height: string;
 }
 
 export interface ButtonFormActions {
@@ -129,6 +135,8 @@ export interface ButtonFormActions {
     handleShadowOffsetYChange: (e: ChangeEvent<HTMLInputElement>) => void;
     handleShadowBlurRadiusChange: (e: ChangeEvent<HTMLInputElement>) => void;
     handleShadowColorChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    handleWidthChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    handleHeightChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface MenuState {

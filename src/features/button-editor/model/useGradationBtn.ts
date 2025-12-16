@@ -17,6 +17,8 @@ export function useGradationBtn(styleName?: string) {
         shadowOffsetY: initialStyle.shadowOffsetY,
         shadowBlurRadius: initialStyle.shadowBlurRadius,
         shadowColor: initialStyle.shadowColor,
+        width: initialStyle.width,
+        height: initialStyle.height,
     });
 
     // GradationBtn 전용 상태
@@ -64,6 +66,10 @@ export function useGradationBtn(styleName?: string) {
         handleShadowBlurRadiusChange: baseForm.handleShadowBlurRadiusChange,
         shadowColor: baseForm.shadowColor,
         handleShadowColorChange: baseForm.handleShadowColorChange,
+        width: baseForm.width,
+        handleWidthChange: baseForm.handleWidthChange,
+        height: baseForm.height,
+        handleHeightChange: baseForm.handleHeightChange,
 
         // GradationBtn 전용
         gradationColor1,

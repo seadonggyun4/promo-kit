@@ -43,6 +43,10 @@ export function SimpleBtnForm({ simpleBtnHook }: SimpleBtnFormProps) {
         handleShadowBlurRadiusChange,
         shadowColor,
         handleShadowColorChange,
+        width,
+        handleWidthChange,
+        height,
+        handleHeightChange,
     } = simpleBtnHook;
 
     const menuLabels = [
@@ -50,6 +54,7 @@ export function SimpleBtnForm({ simpleBtnHook }: SimpleBtnFormProps) {
         t('editor.menuColor'),
         t('editor.menuBorder'),
         t('editor.menuShadow'),
+        t('editor.menuSize'),
     ];
 
     useEffect(() => {
@@ -65,6 +70,8 @@ export function SimpleBtnForm({ simpleBtnHook }: SimpleBtnFormProps) {
         handleShadowOffsetYChange({ target: { value: selected?.styleData.shadowOffsetY } } as ChangeEvent<HTMLInputElement>);
         handleShadowBlurRadiusChange({ target: { value: selected?.styleData.shadowBlurRadius } } as ChangeEvent<HTMLInputElement>);
         handleShadowColorChange({ target: { value: selected?.styleData.shadowColor } } as ChangeEvent<HTMLInputElement>);
+        handleWidthChange({ target: { value: selected?.styleData.width } } as ChangeEvent<HTMLInputElement>);
+        handleHeightChange({ target: { value: selected?.styleData.height } } as ChangeEvent<HTMLInputElement>);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -157,6 +164,26 @@ export function SimpleBtnForm({ simpleBtnHook }: SimpleBtnFormProps) {
                     />
                     <StyledLabel>{t('editor.shadowColor')}</StyledLabel>
                     <ColorPicker value={shadowColor} onChange={handleShadowColorChange} />
+                </SettingForm>
+            )}
+            {menuActive === menu[4] && (
+                <SettingForm>
+                    <StyledLabel>{t('editor.width')} (px)</StyledLabel>
+                    <StyledInput
+                        type="number"
+                        min="50"
+                        max="500"
+                        value={width}
+                        onChange={handleWidthChange}
+                    />
+                    <StyledLabel>{t('editor.height')} (px)</StyledLabel>
+                    <StyledInput
+                        type="number"
+                        min="20"
+                        max="200"
+                        value={height}
+                        onChange={handleHeightChange}
+                    />
                 </SettingForm>
             )}
         </>

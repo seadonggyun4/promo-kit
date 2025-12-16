@@ -12,6 +12,8 @@ interface ButtonFormConfig {
     shadowOffsetY: string;
     shadowBlurRadius: string;
     shadowColor: string;
+    width: string;
+    height: string;
 }
 
 export function useButtonForm(initialConfig: ButtonFormConfig) {
@@ -35,6 +37,10 @@ export function useButtonForm(initialConfig: ButtonFormConfig) {
     const [shadowBlurRadius, setShadowBlurRadius] = useState(initialConfig.shadowBlurRadius);
     const [shadowColor, setShadowColor] = useState(initialConfig.shadowColor);
 
+    // 크기
+    const [width, setWidth] = useState(initialConfig.width);
+    const [height, setHeight] = useState(initialConfig.height);
+
     // 공통 핸들러 생성 함수
     const handleInputChange = (setter: React.Dispatch<React.SetStateAction<string>>) =>
         (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,6 +58,8 @@ export function useButtonForm(initialConfig: ButtonFormConfig) {
     const handleShadowOffsetYChange = handleInputChange(setShadowOffsetY);
     const handleShadowBlurRadiusChange = handleInputChange(setShadowBlurRadius);
     const handleShadowColorChange = handleInputChange(setShadowColor);
+    const handleWidthChange = handleInputChange(setWidth);
+    const handleHeightChange = handleInputChange(setHeight);
 
     // 공통 buttonStyle 객체
     const baseButtonStyle = {
@@ -65,6 +73,8 @@ export function useButtonForm(initialConfig: ButtonFormConfig) {
         shadowOffsetY,
         shadowBlurRadius,
         shadowColor,
+        width,
+        height,
     };
 
     return {
@@ -100,6 +110,12 @@ export function useButtonForm(initialConfig: ButtonFormConfig) {
         handleShadowBlurRadiusChange,
         shadowColor,
         handleShadowColorChange,
+
+        // 크기
+        width,
+        handleWidthChange,
+        height,
+        handleHeightChange,
 
         // 유틸리티
         handleInputChange,

@@ -16,6 +16,8 @@ export const SIMPLE_BTN: SimpleBtnStyleData = {
     shadowOffsetY: '0',
     shadowBlurRadius: '0',
     shadowColor: '#000000',
+    width: '200',
+    height: '50',
 };
 
 export const PRIMARY_BTN: SimpleBtnStyleData = {
@@ -30,6 +32,8 @@ export const PRIMARY_BTN: SimpleBtnStyleData = {
     shadowOffsetY: '4',
     shadowBlurRadius: '6',
     shadowColor: '#2563eb50',
+    width: '200',
+    height: '50',
 };
 
 export const SECONDARY_BTN: SimpleBtnStyleData = {
@@ -44,6 +48,8 @@ export const SECONDARY_BTN: SimpleBtnStyleData = {
     shadowOffsetY: '1',
     shadowBlurRadius: '2',
     shadowColor: '#00000010',
+    width: '200',
+    height: '50',
 };
 
 export const SUCCESS_BTN: SimpleBtnStyleData = {
@@ -58,6 +64,8 @@ export const SUCCESS_BTN: SimpleBtnStyleData = {
     shadowOffsetY: '4',
     shadowBlurRadius: '6',
     shadowColor: '#10b98150',
+    width: '200',
+    height: '50',
 };
 
 export const DANGER_BTN: SimpleBtnStyleData = {
@@ -72,6 +80,8 @@ export const DANGER_BTN: SimpleBtnStyleData = {
     shadowOffsetY: '4',
     shadowBlurRadius: '6',
     shadowColor: '#ef444450',
+    width: '200',
+    height: '50',
 };
 
 export const WARNING_BTN: SimpleBtnStyleData = {
@@ -86,6 +96,8 @@ export const WARNING_BTN: SimpleBtnStyleData = {
     shadowOffsetY: '4',
     shadowBlurRadius: '6',
     shadowColor: '#f59e0b50',
+    width: '200',
+    height: '50',
 };
 
 export const DARK_BTN: SimpleBtnStyleData = {
@@ -100,6 +112,8 @@ export const DARK_BTN: SimpleBtnStyleData = {
     shadowOffsetY: '4',
     shadowBlurRadius: '8',
     shadowColor: '#1f293750',
+    width: '200',
+    height: '50',
 };
 
 export const OUTLINE_BTN: SimpleBtnStyleData = {
@@ -114,6 +128,8 @@ export const OUTLINE_BTN: SimpleBtnStyleData = {
     shadowOffsetY: '0',
     shadowBlurRadius: '0',
     shadowColor: '#000000',
+    width: '200',
+    height: '50',
 };
 
 export const PILL_BTN: SimpleBtnStyleData = {
@@ -128,6 +144,8 @@ export const PILL_BTN: SimpleBtnStyleData = {
     shadowOffsetY: '4',
     shadowBlurRadius: '6',
     shadowColor: '#8b5cf650',
+    width: '200',
+    height: '50',
 };
 
 export const GHOST_BTN: SimpleBtnStyleData = {
@@ -142,6 +160,8 @@ export const GHOST_BTN: SimpleBtnStyleData = {
     shadowOffsetY: '0',
     shadowBlurRadius: '0',
     shadowColor: '#000000',
+    width: '200',
+    height: '50',
 };
 
 export const NEON_BTN: SimpleBtnStyleData = {
@@ -156,6 +176,8 @@ export const NEON_BTN: SimpleBtnStyleData = {
     shadowOffsetY: '0',
     shadowBlurRadius: '15',
     shadowColor: '#00ff88',
+    width: '200',
+    height: '50',
 };
 
 // ============================================
@@ -177,6 +199,8 @@ export const GRADATION_BTN: GradationBtnStyleData = {
     shadowOffsetY: '0',
     shadowBlurRadius: '0',
     shadowColor: '#000000',
+    width: '200',
+    height: '50',
 };
 
 export const SUNSET_BTN: GradationBtnStyleData = {
@@ -194,6 +218,8 @@ export const SUNSET_BTN: GradationBtnStyleData = {
     shadowOffsetY: '4',
     shadowBlurRadius: '15',
     shadowColor: '#f9731680',
+    width: '200',
+    height: '50',
 };
 
 export const OCEAN_BTN: GradationBtnStyleData = {
@@ -211,6 +237,8 @@ export const OCEAN_BTN: GradationBtnStyleData = {
     shadowOffsetY: '4',
     shadowBlurRadius: '15',
     shadowColor: '#3b82f680',
+    width: '200',
+    height: '50',
 };
 
 export const FOREST_BTN: GradationBtnStyleData = {
@@ -228,6 +256,8 @@ export const FOREST_BTN: GradationBtnStyleData = {
     shadowOffsetY: '4',
     shadowBlurRadius: '15',
     shadowColor: '#10b98180',
+    width: '200',
+    height: '50',
 };
 
 export const PURPLE_HAZE_BTN: GradationBtnStyleData = {
@@ -245,6 +275,8 @@ export const PURPLE_HAZE_BTN: GradationBtnStyleData = {
     shadowOffsetY: '4',
     shadowBlurRadius: '20',
     shadowColor: '#8b5cf680',
+    width: '200',
+    height: '50',
 };
 
 export const FIRE_BTN: GradationBtnStyleData = {
@@ -262,6 +294,8 @@ export const FIRE_BTN: GradationBtnStyleData = {
     shadowOffsetY: '4',
     shadowBlurRadius: '15',
     shadowColor: '#ef444480',
+    width: '200',
+    height: '50',
 };
 
 export const AURORA_BTN: GradationBtnStyleData = {
@@ -279,6 +313,8 @@ export const AURORA_BTN: GradationBtnStyleData = {
     shadowOffsetY: '6',
     shadowBlurRadius: '20',
     shadowColor: '#a78bfa60',
+    width: '200',
+    height: '50',
 };
 
 export const MIDNIGHT_BTN: GradationBtnStyleData = {
@@ -296,6 +332,8 @@ export const MIDNIGHT_BTN: GradationBtnStyleData = {
     shadowOffsetY: '4',
     shadowBlurRadius: '15',
     shadowColor: '#1e3a8a80',
+    width: '200',
+    height: '50',
 };
 
 export const ROSE_GOLD_BTN: GradationBtnStyleData = {
@@ -313,6 +351,8 @@ export const ROSE_GOLD_BTN: GradationBtnStyleData = {
     shadowOffsetY: '4',
     shadowBlurRadius: '15',
     shadowColor: '#f43f5e60',
+    width: '200',
+    height: '50',
 };
 
 export const CYBER_BTN: GradationBtnStyleData = {
@@ -330,6 +370,8 @@ export const CYBER_BTN: GradationBtnStyleData = {
     shadowOffsetY: '0',
     shadowBlurRadius: '20',
     shadowColor: '#00ffff80',
+    width: '200',
+    height: '50',
 };
 
 // ============================================
@@ -390,4 +432,4 @@ export const GRADIENT_BTN_STYLES = [
     'CyberBtn',
 ] as const;
 
-export const FORM_MENU = ['텍스트 & 링크', '색상', '테두리', '그림자'];
+export const FORM_MENU = ['텍스트 & 링크', '색상', '테두리', '그림자', '크기'];
