@@ -5,12 +5,18 @@ import { GradationBtnForm } from './GradationBtnForm';
 import { SimpleBtn, GradationBtn } from '@/entities/button';
 import { useElementsStore } from '@/shared/store';
 import { useSimpleBtn, useGradationBtn } from '../model';
-import { ButtonStyle, ButtonStyleDataLegacy } from '@/shared/types';
+import { ButtonStyle, ButtonStyleDataLegacy, SimpleBtnStyle } from '@/shared/types';
+import { SIMPLE_BTN_STYLES } from '@/shared/constants';
 
 interface ButtonSetModalProps {
     selectedBtn: ButtonStyle;
     closeModal: () => void;
 }
+
+// Helper to determine if a button style is a simple (solid) button
+const isSimpleBtnStyle = (style: ButtonStyle): style is SimpleBtnStyle => {
+    return (SIMPLE_BTN_STYLES as readonly string[]).includes(style);
+};
 
 export function ButtonSetModal({ selectedBtn, closeModal }: ButtonSetModalProps) {
     const { t } = useTranslation();
@@ -18,15 +24,17 @@ export function ButtonSetModal({ selectedBtn, closeModal }: ButtonSetModalProps)
     const simpleBtnHook = useSimpleBtn();
     const gradationBtnHook = useGradationBtn();
 
+    const isSimpleBtn = isSimpleBtnStyle(selectedBtn);
+
     const getButtonStyleData = (): ButtonStyleDataLegacy => {
-        if (selectedBtn === 'SimpleBtn') {
+        if (isSimpleBtn) {
             return simpleBtnHook.buttonStyle;
         }
         return gradationBtnHook.buttonStyle;
     };
 
     const renderPreviewButton = () => {
-        if (selectedBtn === 'SimpleBtn') {
+        if (isSimpleBtn) {
             const style = simpleBtnHook.buttonStyle;
             return (
                 <SimpleBtn
@@ -92,8 +100,8 @@ export function ButtonSetModal({ selectedBtn, closeModal }: ButtonSetModalProps)
                     </div>
                 </ElementWrapper>
                 <ElementSettingBox>
-                    {selectedBtn === 'SimpleBtn' && <SimpleBtnForm simpleBtnHook={simpleBtnHook} />}
-                    {selectedBtn === 'GradationBtn' && <GradationBtnForm gradationBtnHook={gradationBtnHook} />}
+                    {isSimpleBtn && <SimpleBtnForm simpleBtnHook={simpleBtnHook} />}
+                    {!isSimpleBtn && <GradationBtnForm gradationBtnHook={gradationBtnHook} />}
                     <BtnWrapper>
                         <button className="activeBtn" onClick={addButton}>{t('common.register')}</button>
                         <button className="cancelBtn" onClick={closeModal}>{t('common.cancel')}</button>

@@ -1,11 +1,13 @@
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { ButtonSetModal } from './ButtonSetModal';
-import { BTN_STYLE } from '@/shared/constants';
+import { BTN_STYLE, SIMPLE_BTN_STYLES, GRADIENT_BTN_STYLES } from '@/shared/constants';
 import { useElementsStore } from '@/shared/store';
 import { ButtonStyle } from '@/shared/types';
 import { SimpleBtn, GradationBtn } from '@/entities/button';
 
 export function ButtonBox() {
+    const { t } = useTranslation();
     const { selected, setSelected } = useElementsStore();
 
     const setSelectedBtn = (style: ButtonStyle) => {
@@ -19,29 +21,63 @@ export function ButtonBox() {
         });
     };
 
-    return (
-        <ButtonBoxStyle>
-            <ButtonWrapper onClick={() => setSelectedBtn('SimpleBtn')}>
+    const renderSimpleButton = (styleName: string) => {
+        const style = BTN_STYLE[styleName];
+        return (
+            <ButtonWrapper key={styleName} onClick={() => setSelectedBtn(styleName as ButtonStyle)}>
                 <SimpleBtn
-                    $backgroundColor={BTN_STYLE['SimpleBtn']['backgroundColor']}
-                    $textColor={BTN_STYLE['SimpleBtn']['textColor']}
-                    $borderRadius={Number(BTN_STYLE['SimpleBtn']['borderRadius'])}
+                    $backgroundColor={style.backgroundColor}
+                    $textColor={style.textColor}
+                    $borderRadius={Number(style.borderRadius)}
+                    style={{
+                        borderWidth: `${style.borderWidth}px`,
+                        borderStyle: 'solid',
+                        borderColor: style.borderColor,
+                        boxShadow: `${style.shadowOffsetX}px ${style.shadowOffsetY}px ${style.shadowBlurRadius}px ${style.shadowColor}`,
+                    }}
                 >
-                    {BTN_STYLE['SimpleBtn']['buttonText']}
+                    {style.buttonText}
                 </SimpleBtn>
             </ButtonWrapper>
-            <ButtonWrapper onClick={() => setSelectedBtn('GradationBtn')}>
+        );
+    };
+
+    const renderGradientButton = (styleName: string) => {
+        const style = BTN_STYLE[styleName];
+        return (
+            <ButtonWrapper key={styleName} onClick={() => setSelectedBtn(styleName as ButtonStyle)}>
                 <GradationBtn
-                    $textColor={BTN_STYLE['GradationBtn']['textColor']}
-                    $gradationColor1={BTN_STYLE['GradationBtn']['gradationColor1']}
-                    $gradationColor2={BTN_STYLE['GradationBtn']['gradationColor2']}
-                    $gradationColor3={BTN_STYLE['GradationBtn']['gradationColor3']}
-                    $gradationColor4={BTN_STYLE['GradationBtn']['gradationColor4']}
-                    $borderRadius={Number(BTN_STYLE['GradationBtn']['borderRadius'])}
+                    $textColor={style.textColor}
+                    $gradationColor1={style.gradationColor1}
+                    $gradationColor2={style.gradationColor2}
+                    $gradationColor3={style.gradationColor3}
+                    $gradationColor4={style.gradationColor4}
+                    $borderRadius={Number(style.borderRadius)}
+                    style={{
+                        borderWidth: `${style.borderWidth}px`,
+                        borderStyle: 'solid',
+                        borderColor: style.borderColor,
+                        boxShadow: `${style.shadowOffsetX}px ${style.shadowOffsetY}px ${style.shadowBlurRadius}px ${style.shadowColor}`,
+                    }}
                 >
-                    {BTN_STYLE['GradationBtn']['buttonText']}
+                    {style.buttonText}
                 </GradationBtn>
             </ButtonWrapper>
+        );
+    };
+
+    return (
+        <ButtonBoxStyle>
+            <SectionTitle>{t('editor.solidButtons')}</SectionTitle>
+            <ButtonGrid>
+                {SIMPLE_BTN_STYLES.map(renderSimpleButton)}
+            </ButtonGrid>
+
+            <SectionTitle>{t('editor.gradientButtons')}</SectionTitle>
+            <ButtonGrid>
+                {GRADIENT_BTN_STYLES.map(renderGradientButton)}
+            </ButtonGrid>
+
             {selected?.type === 'button' && (
                 <ButtonSetModal
                     selectedBtn={selected?.style}
@@ -56,6 +92,21 @@ const ButtonBoxStyle = styled.article`
     display: flex;
     flex-direction: column;
     gap: 1rem;
+`;
+
+const SectionTitle = styled.h3`
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--c-text-secondary);
+    margin: 0.5rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--c-border);
+`;
+
+const ButtonGrid = styled.div`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
 `;
 
 const ButtonWrapper = styled.div`

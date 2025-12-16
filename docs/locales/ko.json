@@ -50,6 +50,8 @@
         "menuColor": "색상",
         "menuBorder": "테두리",
         "menuShadow": "그림자",
-        "promotionPageImage": "프로모션 페이지 이미지"
+        "promotionPageImage": "프로모션 페이지 이미지",
+        "solidButtons": "단색 버튼",
+        "gradientButtons": "그라데이션 버튼"
     }
 }

@@ -50,6 +50,8 @@
         "menuColor": "色",
         "menuBorder": "枠線",
         "menuShadow": "影",
-        "promotionPageImage": "プロモーションページ画像"
+        "promotionPageImage": "プロモーションページ画像",
+        "solidButtons": "単色ボタン",
+        "gradientButtons": "グラデーションボタン"
     }
 }

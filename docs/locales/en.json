@@ -50,6 +50,8 @@
         "menuColor": "Color",
         "menuBorder": "Border",
         "menuShadow": "Shadow",
-        "promotionPageImage": "Promotion page image"
+        "promotionPageImage": "Promotion page image",
+        "solidButtons": "Solid Buttons",
+        "gradientButtons": "Gradient Buttons"
     }
 }

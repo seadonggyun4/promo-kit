@@ -4,7 +4,34 @@ import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 // Button Style Types
 // ============================================
 
-export type ButtonStyle = 'SimpleBtn' | 'GradationBtn';
+// Simple button style types
+export type SimpleBtnStyle =
+    | 'SimpleBtn'
+    | 'PrimaryBtn'
+    | 'SecondaryBtn'
+    | 'SuccessBtn'
+    | 'DangerBtn'
+    | 'WarningBtn'
+    | 'DarkBtn'
+    | 'OutlineBtn'
+    | 'PillBtn'
+    | 'GhostBtn'
+    | 'NeonBtn';
+
+// Gradient button style types
+export type GradientBtnStyle =
+    | 'GradationBtn'
+    | 'SunsetBtn'
+    | 'OceanBtn'
+    | 'ForestBtn'
+    | 'PurpleHazeBtn'
+    | 'FireBtn'
+    | 'AuroraBtn'
+    | 'MidnightBtn'
+    | 'RoseGoldBtn'
+    | 'CyberBtn';
+
+export type ButtonStyle = SimpleBtnStyle | GradientBtnStyle;
 
 export interface SimpleBtnStyleData {
     buttonText: string;
