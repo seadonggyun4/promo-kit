@@ -102,6 +102,8 @@
     "editor": {
         "imageUpload": "이미지 업로드",
         "buttonStyle": "버튼 스타일",
+        "textStyle": "텍스트 스타일",
+        "imageOverlayStyle": "이미지 오버레이",
         "dragImage": "이미지 파일을\n드래그 해주세요",
         "selectFile": "파일 선택하기",
         "buttonText": "버튼 텍스트",
@@ -127,7 +129,13 @@
         "height": "높이",
         "promotionPageImage": "프로모션 페이지 이미지",
         "solidButtons": "단색 버튼",
-        "gradientButtons": "그라데이션 버튼"
+        "gradientButtons": "그라데이션 버튼",
+        "headingText": "헤딩 텍스트",
+        "bodyText": "본문 텍스트",
+        "decorativeText": "장식 텍스트",
+        "simpleImages": "기본 이미지",
+        "framedImages": "프레임 이미지",
+        "decorativeImages": "장식 이미지"
     },
     "project": {
         "new": "새 프로젝트",
@@ -146,10 +154,31 @@
         "redoSteps": "개 다시실행",
         "clear": "내역 지우기",
         "empty": "작업 내역이 없습니다",
+        "emptyDescription": "편집을 시작하면 히스토리가 기록됩니다.",
         "current": "현재",
         "today": "오늘",
+        "older": "이전",
         "elements": "개 요소",
         "undoShortcut": "실행취소",
-        "redoShortcut": "다시실행"
+        "redoShortcut": "다시실행",
+        "initialState": "초기 상태",
+        "actions": {
+            "buttonAdd": "버튼 추가",
+            "buttonStyleChange": "버튼 스타일 변경",
+            "textAdd": "텍스트 추가",
+            "textStyleChange": "텍스트 스타일 변경",
+            "imageOverlayAdd": "이미지 오버레이 추가",
+            "imageOverlayStyleChange": "이미지 오버레이 스타일 변경",
+            "styleChange": "스타일 변경",
+            "positionChange": "위치 이동",
+            "elementRemove": "요소 삭제",
+            "elementAdd": "요소 추가",
+            "elementUpdate": "요소 수정",
+            "elementMove": "요소 이동",
+            "imageChange": "이미지 변경",
+            "batch": "여러 변경",
+            "restore": "상태 복원",
+            "manual": "수동 저장"
+        }
     }
 }

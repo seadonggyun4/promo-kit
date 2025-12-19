@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useElementsStore } from "@/shared/store";
-import { SimpleBtnHook } from "@/shared/types";
+import { useSimpleBtn } from "../model/useSimpleBtn";
 import {
     ModalMenu,
     SettingForm,
@@ -11,7 +11,7 @@ import {
 } from "@/shared/ui";
 
 interface SimpleBtnFormProps {
-    simpleBtnHook: SimpleBtnHook;
+    simpleBtnHook: ReturnType<typeof useSimpleBtn>;
 }
 
 export function SimpleBtnForm({ simpleBtnHook }: SimpleBtnFormProps) {
@@ -78,7 +78,7 @@ export function SimpleBtnForm({ simpleBtnHook }: SimpleBtnFormProps) {
     return (
         <>
             <ModalMenu>
-                {menu && menu.map((item, index) => (
+                {menu && menu.map((item: string, index: number) => (
                     <li
                         key={index}
                         className={item === menuActive ? "active" : ""}

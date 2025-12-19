@@ -12,8 +12,18 @@ import {
 import { ELEMENT_MENU } from '@/shared/constants';
 import backgroundImage from '@/shared/assets/promotionPage.jpeg';
 import { useElementsStore } from '@/shared/store';
-import { ElementData, ButtonStyle, ButtonStyleDataLegacy } from '@/shared/types';
+import {
+    ElementData,
+    ButtonStyle,
+    ButtonStyleDataLegacy,
+    TextStyle,
+    TextStyleDataLegacy,
+    ImageOverlayStyle,
+    ImageOverlayStyleDataLegacy,
+} from '@/shared/types';
 import { SimpleBtn, GradationBtn } from '@/entities/button';
+import { TextElement } from '@/entities/text';
+import { ImageOverlayElement, ImageOverlayContainer } from '@/entities/image-overlay';
 
 interface WebviewProps {
     elementsData: ElementData[];
@@ -71,6 +81,92 @@ const renderButton = (style: ButtonStyle, styleData: ButtonStyleDataLegacy): Rea
     return null;
 };
 
+const renderText = (_style: TextStyle, styleData: TextStyleDataLegacy): React.ReactNode => {
+    return (
+        <TextElement
+            as="div"
+            $fontFamily={styleData.fontFamily}
+            $fontSize={Number(styleData.fontSize)}
+            $fontWeight={styleData.fontWeight}
+            $lineHeight={styleData.lineHeight}
+            $letterSpacing={styleData.letterSpacing}
+            $textColor={styleData.textColor}
+            $textAlign={styleData.textAlign}
+            $textDecoration={styleData.textDecoration}
+            $textTransform={styleData.textTransform}
+            $shadowOffsetX={Number(styleData.shadowOffsetX)}
+            $shadowOffsetY={Number(styleData.shadowOffsetY)}
+            $shadowBlurRadius={Number(styleData.shadowBlurRadius)}
+            $shadowColor={styleData.shadowColor}
+            style={{
+                width: `${styleData.width || 300}px`,
+                height: `${styleData.height || 50}px`,
+                pointerEvents: 'none',
+            }}
+        >
+            {styleData.text}
+        </TextElement>
+    );
+};
+
+const renderImageOverlay = (_style: ImageOverlayStyle, styleData: ImageOverlayStyleDataLegacy): React.ReactNode => {
+    if (!styleData.imageUrl) {
+        return (
+            <ImageOverlayContainer
+                $borderRadius={Number(styleData.borderRadius)}
+                $borderWidth={Number(styleData.borderWidth)}
+                $borderColor={styleData.borderColor}
+                $shadowOffsetX={Number(styleData.shadowOffsetX)}
+                $shadowOffsetY={Number(styleData.shadowOffsetY)}
+                $shadowBlurRadius={Number(styleData.shadowBlurRadius)}
+                $shadowColor={styleData.shadowColor}
+                style={{
+                    width: `${styleData.width || 200}px`,
+                    height: `${styleData.height || 150}px`,
+                    pointerEvents: 'none',
+                }}
+            >
+                No Image
+            </ImageOverlayContainer>
+        );
+    }
+
+    return (
+        <ImageOverlayElement
+            as="div"
+            $objectFit={styleData.objectFit}
+            $opacity={Number(styleData.opacity)}
+            $borderRadius={Number(styleData.borderRadius)}
+            $borderWidth={Number(styleData.borderWidth)}
+            $borderColor={styleData.borderColor}
+            $shadowOffsetX={Number(styleData.shadowOffsetX)}
+            $shadowOffsetY={Number(styleData.shadowOffsetY)}
+            $shadowBlurRadius={Number(styleData.shadowBlurRadius)}
+            $shadowColor={styleData.shadowColor}
+            style={{
+                width: `${styleData.width || 200}px`,
+                height: `${styleData.height || 150}px`,
+                pointerEvents: 'none',
+            }}
+        >
+            <img src={styleData.imageUrl} alt={styleData.altText || 'Image'} />
+        </ImageOverlayElement>
+    );
+};
+
+const renderElement = (data: ElementData): React.ReactNode => {
+    switch (data.type) {
+        case 'button':
+            return renderButton(data.style as ButtonStyle, data.styleData);
+        case 'text':
+            return renderText(data.style as TextStyle, data.styleData);
+        case 'image-overlay':
+            return renderImageOverlay(data.style as ImageOverlayStyle, data.styleData);
+        default:
+            return null;
+    }
+};
+
 interface DraggableElementProps {
     data: ElementData;
     menuActive: string;
@@ -102,7 +198,7 @@ function DraggableElement({ data, menuActive, onElementClick, onMenuClick }: Dra
             {...attributes}
             onClick={(e) => onElementClick(e, data)}
         >
-            {renderButton(data.style, data.styleData)}
+            {renderElement(data)}
             {menuActive === data.id && (
                 <ElementMenu>
                     {data.type &&

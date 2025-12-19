@@ -1,21 +1,44 @@
 import { ButtonStyle, ButtonStyleDataLegacy } from './button';
+import { TextStyle, TextStyleDataLegacy } from './text';
+import { ImageOverlayStyle, ImageOverlayStyleDataLegacy } from './imageOverlay';
 
-export interface ElementData {
+// ============================================
+// Element Types
+// ============================================
+
+export type ElementType = 'button' | 'text' | 'image-overlay';
+
+export type ElementStyle = ButtonStyle | TextStyle | ImageOverlayStyle;
+
+export type ElementStyleData = ButtonStyleDataLegacy | TextStyleDataLegacy | ImageOverlayStyleDataLegacy;
+
+// ============================================
+// Element Data Interfaces
+// ============================================
+
+export interface BaseElementData {
     id: string;
-    type: string;
-    style: ButtonStyle;
-    styleData: ButtonStyleDataLegacy;
+    type: ElementType;
     x: number;
     y: number;
 }
 
-export interface ElementsContextType {
-    elementsData: ElementData[];
-    selected: ElementData | null;
-    createSampleButton: (style: ButtonStyle, styleData: ButtonStyleDataLegacy, elKey: string) => void;
-    updateElement: (id: string, style: ButtonStyle, styleData: ButtonStyleDataLegacy) => void;
-    removeElement: (id: string) => void;
-    setSelected: (element: ElementData | null) => void;
-    updateElementPosition: (id: string, x: number, y: number) => void;
-    updateSampleButton: (id: string, style: ButtonStyle, styleData: ButtonStyleDataLegacy) => void;
+export interface ButtonElementData extends BaseElementData {
+    type: 'button';
+    style: ButtonStyle;
+    styleData: ButtonStyleDataLegacy;
 }
+
+export interface TextElementData extends BaseElementData {
+    type: 'text';
+    style: TextStyle;
+    styleData: TextStyleDataLegacy;
+}
+
+export interface ImageOverlayElementData extends BaseElementData {
+    type: 'image-overlay';
+    style: ImageOverlayStyle;
+    styleData: ImageOverlayStyleDataLegacy;
+}
+
+export type ElementData = ButtonElementData | TextElementData | ImageOverlayElementData;

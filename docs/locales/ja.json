@@ -102,6 +102,8 @@
     "editor": {
         "imageUpload": "画像アップロード",
         "buttonStyle": "ボタンスタイル",
+        "textStyle": "テキストスタイル",
+        "imageOverlayStyle": "画像オーバーレイ",
         "dragImage": "画像ファイルを\nドラッグしてください",
         "selectFile": "ファイルを選択",
         "buttonText": "ボタンテキスト",
@@ -127,7 +129,13 @@
         "height": "高さ",
         "promotionPageImage": "プロモーションページ画像",
         "solidButtons": "単色ボタン",
-        "gradientButtons": "グラデーションボタン"
+        "gradientButtons": "グラデーションボタン",
+        "headingText": "見出しテキスト",
+        "bodyText": "本文テキスト",
+        "decorativeText": "装飾テキスト",
+        "simpleImages": "シンプル画像",
+        "framedImages": "フレーム画像",
+        "decorativeImages": "装飾画像"
     },
     "project": {
         "new": "新規プロジェクト",
@@ -146,10 +154,31 @@
         "redoSteps": "件のやり直し",
         "clear": "履歴をクリア",
         "empty": "履歴がありません",
+        "emptyDescription": "編集を開始すると履歴が記録されます。",
         "current": "現在",
         "today": "今日",
+        "older": "以前",
         "elements": "要素",
         "undoShortcut": "元に戻す",
-        "redoShortcut": "やり直し"
+        "redoShortcut": "やり直し",
+        "initialState": "初期状態",
+        "actions": {
+            "buttonAdd": "ボタン追加",
+            "buttonStyleChange": "ボタンスタイル変更",
+            "textAdd": "テキスト追加",
+            "textStyleChange": "テキストスタイル変更",
+            "imageOverlayAdd": "画像オーバーレイ追加",
+            "imageOverlayStyleChange": "画像オーバーレイスタイル変更",
+            "styleChange": "スタイル変更",
+            "positionChange": "位置変更",
+            "elementRemove": "要素削除",
+            "elementAdd": "要素追加",
+            "elementUpdate": "要素更新",
+            "elementMove": "要素移動",
+            "imageChange": "画像変更",
+            "batch": "複数の変更",
+            "restore": "状態復元",
+            "manual": "手動保存"
+        }
     }
 }

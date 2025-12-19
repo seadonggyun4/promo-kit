@@ -1,5 +1,3 @@
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
-
 // ============================================
 // Button Style Types
 // ============================================
@@ -81,13 +79,7 @@ export type ButtonStyleDataLegacy = Record<string, any>;
 export interface SimpleBtnProps {
     $backgroundColor: string;
     $textColor: string;
-    $borderRadius: string;
-    $borderWidth: string;
-    $borderColor: string;
-    $shadowOffsetX: string;
-    $shadowOffsetY: string;
-    $shadowBlurRadius: string;
-    $shadowColor: string;
+    $borderRadius: string | number;
 }
 
 export interface GradationBtnProps {
@@ -96,69 +88,5 @@ export interface GradationBtnProps {
     $gradationColor3: string;
     $gradationColor4: string;
     $textColor: string;
-    $borderRadius: string;
-    $borderWidth: string;
-    $borderColor: string;
-    $shadowOffsetX: string;
-    $shadowOffsetY: string;
-    $shadowBlurRadius: string;
-    $shadowColor: string;
-}
-
-// ============================================
-// Hook Types
-// ============================================
-
-export interface ButtonFormState {
-    buttonText: string;
-    buttonLink: string;
-    textColor: string;
-    borderRadius: string;
-    borderWidth: string;
-    borderColor: string;
-    shadowOffsetX: string;
-    shadowOffsetY: string;
-    shadowBlurRadius: string;
-    shadowColor: string;
-    width: string;
-    height: string;
-}
-
-export interface ButtonFormActions {
-    handleTextChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    handleLinkChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    handleTextColorChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    handleBorderRadiusChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    handleBorderWidthChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    handleBorderColorChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    handleShadowOffsetXChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    handleShadowOffsetYChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    handleShadowBlurRadiusChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    handleShadowColorChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    handleWidthChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    handleHeightChange: (e: ChangeEvent<HTMLInputElement>) => void;
-}
-
-export interface MenuState {
-    menu: string[];
-    menuActive: string;
-    setMenuActive: Dispatch<SetStateAction<string>>;
-}
-
-export interface SimpleBtnHook extends ButtonFormState, ButtonFormActions, MenuState {
-    backgroundColor: string;
-    handleBackgroundColorChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    buttonStyle: SimpleBtnStyleData;
-}
-
-export interface GradationBtnHook extends ButtonFormState, ButtonFormActions, MenuState {
-    gradationColor1: string;
-    handleGradationColor1Change: (e: ChangeEvent<HTMLInputElement>) => void;
-    gradationColor2: string;
-    handleGradationColor2Change: (e: ChangeEvent<HTMLInputElement>) => void;
-    gradationColor3: string;
-    handleGradationColor3Change: (e: ChangeEvent<HTMLInputElement>) => void;
-    gradationColor4: string;
-    handleGradationColor4Change: (e: ChangeEvent<HTMLInputElement>) => void;
-    buttonStyle: GradationBtnStyleData;
+    $borderRadius: string | number;
 }

@@ -102,6 +102,8 @@
     "editor": {
         "imageUpload": "Image Upload",
         "buttonStyle": "Button Style",
+        "textStyle": "Text Style",
+        "imageOverlayStyle": "Image Overlay",
         "dragImage": "Drag and drop\nimage file here",
         "selectFile": "Select File",
         "buttonText": "Button Text",
@@ -127,7 +129,13 @@
         "height": "Height",
         "promotionPageImage": "Promotion page image",
         "solidButtons": "Solid Buttons",
-        "gradientButtons": "Gradient Buttons"
+        "gradientButtons": "Gradient Buttons",
+        "headingText": "Heading Text",
+        "bodyText": "Body Text",
+        "decorativeText": "Decorative Text",
+        "simpleImages": "Simple Images",
+        "framedImages": "Framed Images",
+        "decorativeImages": "Decorative Images"
     },
     "project": {
         "new": "New Project",
@@ -146,10 +154,31 @@
         "redoSteps": "redo steps",
         "clear": "Clear History",
         "empty": "No history yet",
+        "emptyDescription": "History will be recorded when you start editing.",
         "current": "Current",
         "today": "Today",
+        "older": "Earlier",
         "elements": "elements",
         "undoShortcut": "Undo",
-        "redoShortcut": "Redo"
+        "redoShortcut": "Redo",
+        "initialState": "Initial State",
+        "actions": {
+            "buttonAdd": "Add Button",
+            "buttonStyleChange": "Button Style Change",
+            "textAdd": "Add Text",
+            "textStyleChange": "Text Style Change",
+            "imageOverlayAdd": "Add Image Overlay",
+            "imageOverlayStyleChange": "Image Overlay Style Change",
+            "styleChange": "Style Change",
+            "positionChange": "Position Change",
+            "elementRemove": "Remove Element",
+            "elementAdd": "Add Element",
+            "elementUpdate": "Update Element",
+            "elementMove": "Move Element",
+            "imageChange": "Image Change",
+            "batch": "Multiple Changes",
+            "restore": "State Restore",
+            "manual": "Manual Save"
+        }
     }
 }

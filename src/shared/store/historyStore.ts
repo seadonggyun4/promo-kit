@@ -310,13 +310,14 @@ export const pushToHistory = (
  */
 export const initializeHistory = (
     elements: ElementData[],
-    backgroundImage: string | null
+    backgroundImage: string | null,
+    description?: string
 ) => {
     const initialSnapshot = createSnapshot(
         elements,
         backgroundImage,
         null,
-        '초기 상태',
+        description || 'Initial State',
         'manual'
     );
 

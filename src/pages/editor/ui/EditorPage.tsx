@@ -6,7 +6,7 @@ import { Menu, ContentPanel, Webview } from '@/widgets';
 import { DownloadBtn } from '@/features/download';
 import { HistoryPanel } from '@/features/version-history';
 import { useMenu } from '../model';
-import { useElementsStore, useUploadImageStore, useHistoryStore } from '@/shared/store';
+import { useElementsStore, useUploadImageStore, useHistoryStore, initializeHistory } from '@/shared/store';
 
 const AUTO_SAVE_KEY = 'promokit_autosave';
 const AUTO_SAVE_DEBOUNCE = 10000;
@@ -57,8 +57,9 @@ export function EditorPage() {
         return () => clearTimeout(timeoutId);
     }, [elementsData, uploadedImage]);
 
-    // Restore from localStorage on mount
+    // Restore from localStorage on mount and initialize history
     useEffect(() => {
+        const initialStateLabel = t('history.initialState');
         try {
             const saved = localStorage.getItem(AUTO_SAVE_KEY);
             if (saved) {
@@ -66,12 +67,22 @@ export function EditorPage() {
                 if (elements?.length > 0 || backgroundImage) {
                     useElementsStore.setState({ elementsData: elements || [] });
                     useUploadImageStore.setState({ uploadedImage: backgroundImage || '' });
+                    // Initialize history with restored state
+                    initializeHistory(elements || [], backgroundImage || null, initialStateLabel);
+                } else {
+                    // Initialize history with empty state
+                    initializeHistory([], null, initialStateLabel);
                 }
+            } else {
+                // Initialize history with empty state
+                initializeHistory([], null, initialStateLabel);
             }
         } catch (err) {
             console.error('Failed to restore:', err);
+            // Initialize history with empty state on error
+            initializeHistory([], null, initialStateLabel);
         }
-    }, []);
+    }, [t]);
 
     const handleUndo = () => {
         const previousSnapshot = undo();
@@ -117,13 +128,13 @@ export function EditorPage() {
         reader.onload = (event) => {
             try {
                 const data = JSON.parse(event.target?.result as string);
-                if (data.elements) {
-                    useElementsStore.setState({ elementsData: data.elements });
-                }
-                if (data.backgroundImage !== undefined) {
-                    useUploadImageStore.setState({ uploadedImage: data.backgroundImage || '' });
-                }
-                useHistoryStore.getState().clearHistory();
+                const elements = data.elements || [];
+                const backgroundImage = data.backgroundImage || null;
+
+                useElementsStore.setState({ elementsData: elements });
+                useUploadImageStore.setState({ uploadedImage: backgroundImage || '' });
+                // Initialize history with imported state
+                initializeHistory(elements, backgroundImage, t('history.initialState'));
             } catch (err) {
                 console.error('Failed to import:', err);
                 alert(t('project.importError'));
@@ -143,7 +154,8 @@ export function EditorPage() {
         }
         useElementsStore.setState({ elementsData: [] });
         useUploadImageStore.setState({ uploadedImage: '' });
-        useHistoryStore.getState().clearHistory();
+        // Initialize history with empty state
+        initializeHistory([], null, t('history.initialState'));
         localStorage.removeItem(AUTO_SAVE_KEY);
     };
 

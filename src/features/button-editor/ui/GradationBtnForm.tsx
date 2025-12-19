@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useElementsStore } from "@/shared/store";
-import { GradationBtnHook } from "@/shared/types";
+import { useGradationBtn } from "../model/useGradationBtn";
 import {
     ModalMenu,
     SettingForm,
@@ -13,7 +13,7 @@ import {
 } from "@/shared/ui";
 
 interface GradationBtnFormProps {
-    gradationBtnHook: GradationBtnHook;
+    gradationBtnHook: ReturnType<typeof useGradationBtn>;
 }
 
 export function GradationBtnForm({ gradationBtnHook }: GradationBtnFormProps) {
@@ -89,7 +89,7 @@ export function GradationBtnForm({ gradationBtnHook }: GradationBtnFormProps) {
     return (
         <>
             <ModalMenu>
-                {menu && menu.map((item, index) => (
+                {menu && menu.map((item: string, index: number) => (
                     <li
                         key={index}
                         className={item === menuActive ? "active" : ""}

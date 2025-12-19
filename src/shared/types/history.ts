@@ -185,21 +185,22 @@ export const createSnapshot = (
 });
 
 /**
- * Get human-readable description for action type
+ * Get i18n key for action type
+ * Returns the translation key to be used with t() function
  */
-export const getActionTypeLabel = (actionType: HistoryActionType): string => {
-    const labels: Record<HistoryActionType, string> = {
-        element_add: '요소 추가',
-        element_remove: '요소 삭제',
-        element_update: '요소 수정',
-        element_move: '요소 이동',
-        element_style: '스타일 변경',
-        image_change: '이미지 변경',
-        batch: '여러 변경',
-        restore: '상태 복원',
-        manual: '수동 저장',
+export const getActionTypeI18nKey = (actionType: HistoryActionType): string => {
+    const keys: Record<HistoryActionType, string> = {
+        element_add: 'history.actions.elementAdd',
+        element_remove: 'history.actions.elementRemove',
+        element_update: 'history.actions.elementUpdate',
+        element_move: 'history.actions.elementMove',
+        element_style: 'history.actions.styleChange',
+        image_change: 'history.actions.imageChange',
+        batch: 'history.actions.batch',
+        restore: 'history.actions.restore',
+        manual: 'history.actions.manual',
     };
-    return labels[actionType];
+    return keys[actionType];
 };
 
 /**

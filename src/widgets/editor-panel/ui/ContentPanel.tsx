@@ -2,6 +2,8 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { UploadArea } from '@/features/image-upload';
 import { ButtonBox } from '@/features/button-editor';
+import { TextBox } from '@/features/text-editor';
+import { ImageOverlayBox } from '@/features/image-overlay-editor';
 import { MENU } from '@/shared/constants';
 
 interface ContentPanelProps {
@@ -11,16 +13,31 @@ interface ContentPanelProps {
 export function ContentPanel({ menuActive }: ContentPanelProps) {
     const { t } = useTranslation();
 
+    const getPanelTitle = () => {
+        switch (menuActive) {
+            case MENU[0]:
+                return t('editor.imageUpload');
+            case MENU[1]:
+                return t('editor.buttonStyle');
+            case MENU[2]:
+                return t('editor.textStyle');
+            case MENU[3]:
+                return t('editor.imageOverlayStyle');
+            default:
+                return '';
+        }
+    };
+
     return (
         <ContentPanelStyle>
             <PanelHeader>
-                <PanelTitle>
-                    {menuActive === MENU[0] ? t('editor.imageUpload') : t('editor.buttonStyle')}
-                </PanelTitle>
+                <PanelTitle>{getPanelTitle()}</PanelTitle>
             </PanelHeader>
             <PanelContent>
                 {MENU[0] === menuActive && <UploadArea />}
                 {MENU[1] === menuActive && <ButtonBox />}
+                {MENU[2] === menuActive && <TextBox />}
+                {MENU[3] === menuActive && <ImageOverlayBox />}
             </PanelContent>
         </ContentPanelStyle>
     );
