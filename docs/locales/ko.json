@@ -7,7 +7,13 @@
         "register": "등록",
         "cancel": "취소",
         "edit": "수정",
-        "delete": "삭제"
+        "delete": "삭제",
+        "save": "저장",
+        "saving": "저장 중...",
+        "create": "생성",
+        "creating": "생성 중...",
+        "loading": "로딩 중...",
+        "close": "닫기"
     },
     "download": {
         "title": "코드 내보내기",
@@ -102,5 +108,28 @@
         "promotionPageImage": "프로모션 페이지 이미지",
         "solidButtons": "단색 버튼",
         "gradientButtons": "그라데이션 버튼"
+    },
+    "project": {
+        "new": "새 프로젝트",
+        "import": "JSON 가져오기",
+        "export": "JSON 내보내기",
+        "saving": "저장 중...",
+        "saved": "저장됨",
+        "importError": "파일을 불러오는데 실패했습니다.",
+        "confirmNew": "현재 작업이 삭제됩니다. 계속하시겠습니까?"
+    },
+    "history": {
+        "title": "작업 내역",
+        "undo": "실행취소",
+        "redo": "다시실행",
+        "undoSteps": "개 실행취소",
+        "redoSteps": "개 다시실행",
+        "clear": "내역 지우기",
+        "empty": "작업 내역이 없습니다",
+        "current": "현재",
+        "today": "오늘",
+        "elements": "개 요소",
+        "undoShortcut": "실행취소",
+        "redoShortcut": "다시실행"
     }
 }

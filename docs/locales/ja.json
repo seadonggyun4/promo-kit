@@ -7,7 +7,13 @@
         "register": "登録",
         "cancel": "キャンセル",
         "edit": "編集",
-        "delete": "削除"
+        "delete": "削除",
+        "save": "保存",
+        "saving": "保存中...",
+        "create": "作成",
+        "creating": "作成中...",
+        "loading": "読み込み中...",
+        "close": "閉じる"
     },
     "download": {
         "title": "コードエクスポート",
@@ -102,5 +108,28 @@
         "promotionPageImage": "プロモーションページ画像",
         "solidButtons": "単色ボタン",
         "gradientButtons": "グラデーションボタン"
+    },
+    "project": {
+        "new": "新規プロジェクト",
+        "import": "JSONをインポート",
+        "export": "JSONをエクスポート",
+        "saving": "保存中...",
+        "saved": "保存済み",
+        "importError": "ファイルの読み込みに失敗しました。",
+        "confirmNew": "現在の作業が削除されます。続けますか？"
+    },
+    "history": {
+        "title": "履歴",
+        "undo": "元に戻す",
+        "redo": "やり直し",
+        "undoSteps": "件の元に戻す",
+        "redoSteps": "件のやり直し",
+        "clear": "履歴をクリア",
+        "empty": "履歴がありません",
+        "current": "現在",
+        "today": "今日",
+        "elements": "要素",
+        "undoShortcut": "元に戻す",
+        "redoShortcut": "やり直し"
     }
 }

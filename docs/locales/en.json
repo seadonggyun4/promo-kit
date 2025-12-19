@@ -7,7 +7,13 @@
         "register": "Register",
         "cancel": "Cancel",
         "edit": "Edit",
-        "delete": "Delete"
+        "delete": "Delete",
+        "save": "Save",
+        "saving": "Saving...",
+        "create": "Create",
+        "creating": "Creating...",
+        "loading": "Loading...",
+        "close": "Close"
     },
     "download": {
         "title": "Export Code",
@@ -102,5 +108,28 @@
         "promotionPageImage": "Promotion page image",
         "solidButtons": "Solid Buttons",
         "gradientButtons": "Gradient Buttons"
+    },
+    "project": {
+        "new": "New Project",
+        "import": "Import JSON",
+        "export": "Export JSON",
+        "saving": "Saving...",
+        "saved": "Saved",
+        "importError": "Failed to load file.",
+        "confirmNew": "Current work will be deleted. Continue?"
+    },
+    "history": {
+        "title": "History",
+        "undo": "Undo",
+        "redo": "Redo",
+        "undoSteps": "undo steps",
+        "redoSteps": "redo steps",
+        "clear": "Clear History",
+        "empty": "No history yet",
+        "current": "Current",
+        "today": "Today",
+        "elements": "elements",
+        "undoShortcut": "Undo",
+        "redoShortcut": "Redo"
     }
 }
