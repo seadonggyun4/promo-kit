@@ -21,3 +21,8 @@ body {
 ::-webkit-scrollbar-track {
     background-color: transparent;
 }
+
+/* SweetAlert2 아이콘 가운데 정렬 */
+.swal2-icon {
+    margin: 1.5em auto 0.6em !important;
+}

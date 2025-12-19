@@ -1,11 +1,22 @@
 import styled, { keyframes } from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { ButtonSetModal } from './ButtonSetModal';
-import { BTN_STYLE } from '@/shared/constants';
+import { BTN_STYLE, ANIMATED_BTN_STYLES } from '@/shared/constants';
 import { useElementsStore } from '@/shared/store';
-import { ButtonStyle } from '@/shared/types';
-import { SimpleBtn, GradationBtn } from '@/entities/button';
+import { ButtonStyle, AnimatedBtnStyle } from '@/shared/types';
+import { SimpleBtn, GradationBtn, BounceBtn, GlowBtn, PulseBtn, ShakeBtn, SlideBtn, RippleBtn } from '@/entities/button';
+
+const AnimatedComponents = {
+    BounceBtn,
+    GlowBtn,
+    PulseBtn,
+    ShakeBtn,
+    SlideBtn,
+    RippleBtn,
+} as const;
 
 export function ButtonBox() {
+    const { t } = useTranslation();
     const { selected, setSelected } = useElementsStore();
 
     const setSelectedBtn = (style: ButtonStyle) => {
@@ -24,6 +35,7 @@ export function ButtonBox() {
 
     return (
         <ButtonBoxStyle>
+            <CategoryLabel>{t('editor.simpleButtons')}</CategoryLabel>
             <ButtonWrapper $delay={0} onClick={() => setSelectedBtn('SimpleBtn')}>
                 <SimpleBtn
                     $backgroundColor={simpleStyle.backgroundColor}
@@ -42,6 +54,7 @@ export function ButtonBox() {
                 </SimpleBtn>
             </ButtonWrapper>
 
+            <CategoryLabel>{t('editor.gradientButtons')}</CategoryLabel>
             <ButtonWrapper $delay={50} onClick={() => setSelectedBtn('GradationBtn')}>
                 <GradationBtn
                     $textColor={gradationStyle.textColor}
@@ -62,6 +75,32 @@ export function ButtonBox() {
                     {gradationStyle.buttonText}
                 </GradationBtn>
             </ButtonWrapper>
+
+            <CategoryLabel>{t('editor.animatedButtons')}</CategoryLabel>
+            {ANIMATED_BTN_STYLES.map((styleName, index) => {
+                const style = BTN_STYLE[styleName];
+                const Component = AnimatedComponents[styleName as AnimatedBtnStyle];
+                return (
+                    <ButtonWrapper key={styleName} $delay={100 + index * 50} onClick={() => setSelectedBtn(styleName)}>
+                        <Component
+                            $backgroundColor={style.backgroundColor}
+                            $textColor={style.textColor}
+                            $borderRadius={Number(style.borderRadius)}
+                            $secondaryColor={style.secondaryColor}
+                            style={{
+                                borderWidth: `${style.borderWidth}px`,
+                                borderStyle: 'solid',
+                                borderColor: style.borderColor,
+                                boxShadow: `${style.shadowOffsetX}px ${style.shadowOffsetY}px ${style.shadowBlurRadius}px ${style.shadowColor}`,
+                                padding: '0.5rem 1rem',
+                                fontSize: '0.875rem',
+                            }}
+                        >
+                            {style.buttonText}
+                        </Component>
+                    </ButtonWrapper>
+                );
+            })}
 
             {selected?.type === 'button' && (
                 <ButtonSetModal
@@ -102,5 +141,18 @@ const ButtonWrapper = styled.div<{ $delay: number }>`
 
     &:active {
         transform: scale(0.98);
+    }
+`;
+
+const CategoryLabel = styled.span`
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--c-text-secondary, #6b7280);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.5rem;
+
+    &:first-child {
+        margin-top: 0;
     }
 `;

@@ -29,7 +29,16 @@ export type GradientBtnStyle =
     | 'RoseGoldBtn'
     | 'CyberBtn';
 
-export type ButtonStyle = SimpleBtnStyle | GradientBtnStyle;
+// Animated button style types
+export type AnimatedBtnStyle =
+    | 'BounceBtn'
+    | 'GlowBtn'
+    | 'PulseBtn'
+    | 'ShakeBtn'
+    | 'SlideBtn'
+    | 'RippleBtn';
+
+export type ButtonStyle = SimpleBtnStyle | GradientBtnStyle | AnimatedBtnStyle;
 
 export interface SimpleBtnStyleData {
     buttonText: string;
@@ -66,7 +75,16 @@ export interface GradationBtnStyleData {
     height: string;
 }
 
-export type ButtonStyleData = SimpleBtnStyleData | GradationBtnStyleData;
+export interface AnimatedBtnStyleData extends SimpleBtnStyleData {
+    secondaryColor?: string;
+    // Animation parameters
+    animationDuration?: string;   // e.g., "0.5" (seconds)
+    animationIntensity?: string;  // e.g., "8" (pixels or scale factor)
+    glowSize?: string;            // e.g., "20" (pixels) - for GlowBtn
+    glowIntensity?: string;       // e.g., "1" (opacity multiplier) - for GlowBtn
+}
+
+export type ButtonStyleData = SimpleBtnStyleData | GradationBtnStyleData | AnimatedBtnStyleData;
 
 // Legacy type with index signature for backwards compatibility
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -89,4 +107,15 @@ export interface GradationBtnProps {
     $gradationColor4: string;
     $textColor: string;
     $borderRadius: string | number;
+}
+
+export interface AnimatedBtnProps {
+    $backgroundColor: string;
+    $textColor: string;
+    $borderRadius: string | number;
+    $secondaryColor?: string;
+    $animationDuration?: number;
+    $animationIntensity?: number;
+    $glowSize?: number;
+    $glowIntensity?: number;
 }

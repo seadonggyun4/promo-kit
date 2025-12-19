@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import Swal from 'sweetalert2';
+import { SeoToast } from 'seo-toast/react';
+import 'seo-toast/styles';
 import { Header } from './Header';
 import { Menu, ContentPanel, Webview } from '@/widgets';
 import { DownloadBtn } from '@/features/download';
@@ -17,10 +20,11 @@ export function EditorPage() {
     const elementsData = useElementsStore((state) => state.elementsData);
     const { isActive, activeMenu } = useMenu();
     const fileInputRef = useRef<HTMLInputElement>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const toastRef = useRef<any>(null);
 
     // Modal states
     const [isHistoryPanelOpen, setIsHistoryPanelOpen] = useState(false);
-    const [saveStatus, setSaveStatus] = useState<'saved' | 'saving' | 'idle'>('idle');
 
     // History store
     const canUndo = useHistoryStore((state) => state.past.length > 0);
@@ -28,11 +32,10 @@ export function EditorPage() {
     const undo = useHistoryStore((state) => state.undo);
     const redo = useHistoryStore((state) => state.redo);
 
-    // Auto-save to localStorage
+    // Auto-save to localStorage with toast notification
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             if (elementsData.length > 0 || uploadedImage) {
-                setSaveStatus('saving');
                 try {
                     const saveData = {
                         elements: elementsData,
@@ -40,22 +43,15 @@ export function EditorPage() {
                         savedAt: new Date().toISOString(),
                     };
                     localStorage.setItem(AUTO_SAVE_KEY, JSON.stringify(saveData));
-                    setSaveStatus('saved');
-                    window.dispatchEvent(
-                        new CustomEvent('seo-toast:show', {
-                            detail: { message: t('project.saved'), type: 'success' },
-                        })
-                    );
-                    setTimeout(() => setSaveStatus('idle'), 3000);
+                    toastRef.current?.success(t('project.saved'));
                 } catch (err) {
                     console.error('Auto-save failed:', err);
-                    setSaveStatus('idle');
                 }
             }
         }, AUTO_SAVE_DEBOUNCE);
 
         return () => clearTimeout(timeoutId);
-    }, [elementsData, uploadedImage]);
+    }, [elementsData, uploadedImage, t]);
 
     // Restore from localStorage on mount and initialize history
     useEffect(() => {
@@ -148,9 +144,19 @@ export function EditorPage() {
         }
     };
 
-    const handleNewProject = () => {
+    const handleNewProject = async () => {
         if (elementsData.length > 0) {
-            if (!confirm(t('project.confirmNew'))) return;
+            const result = await Swal.fire({
+                title: t('project.new'),
+                text: t('project.confirmNew'),
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: t('common.delete'),
+                cancelButtonText: t('common.cancel'),
+            });
+            if (!result.isConfirmed) return;
         }
         useElementsStore.setState({ elementsData: [] });
         useUploadImageStore.setState({ uploadedImage: '' });
@@ -196,13 +202,6 @@ export function EditorPage() {
                                 <line x1="12" y1="15" x2="12" y2="3" />
                             </svg>
                         </ToolbarButton>
-
-                        {/* Auto-save status */}
-                        {saveStatus !== 'idle' && (
-                            <SaveStatus $status={saveStatus}>
-                                {saveStatus === 'saving' ? t('project.saving') : t('project.saved')}
-                            </SaveStatus>
-                        )}
 
                         <ToolbarDivider />
 
@@ -262,6 +261,9 @@ export function EditorPage() {
                 isOpen={isHistoryPanelOpen}
                 onClose={() => setIsHistoryPanelOpen(false)}
             />
+
+            {/* Toast Notification */}
+            <SeoToast ref={toastRef} position="bottom-center" />
         </>
     );
 }
@@ -330,14 +332,6 @@ const UndoRedoGroup = styled.div`
     display: flex;
     align-items: center;
     gap: 0.25rem;
-`;
-
-const SaveStatus = styled.span<{ $status: 'saved' | 'saving' }>`
-    font-size: 0.75rem;
-    color: ${({ $status }) => ($status === 'saved' ? 'var(--c-success, #10b981)' : 'var(--c-text-tertiary)')};
-    padding: 0.25rem 0.5rem;
-    background: var(--c-background-tertiary);
-    border-radius: 4px;
 `;
 
 const ContentStyle = styled.div`

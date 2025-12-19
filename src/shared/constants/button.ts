@@ -1,4 +1,4 @@
-import { SimpleBtnStyleData, GradationBtnStyleData, ButtonStyleDataLegacy } from '../types';
+import { SimpleBtnStyleData, GradationBtnStyleData, AnimatedBtnStyleData, ButtonStyleDataLegacy } from '../types';
 
 // ============================================
 // Simple Button Styles
@@ -375,6 +375,117 @@ export const CYBER_BTN: GradationBtnStyleData = {
 };
 
 // ============================================
+// Animated Button Styles
+// ============================================
+
+export const BOUNCE_BTN: AnimatedBtnStyleData = {
+    buttonText: 'BOUNCE',
+    buttonLink: '',
+    textColor: '#ffffff',
+    backgroundColor: '#8b5cf6',
+    borderRadius: '12',
+    borderWidth: '0',
+    borderColor: '#000000',
+    shadowOffsetX: '0',
+    shadowOffsetY: '4',
+    shadowBlurRadius: '15',
+    shadowColor: '#8b5cf680',
+    width: '200',
+    height: '50',
+    animationDuration: '0.5',
+    animationIntensity: '8',
+};
+
+export const GLOW_BTN: AnimatedBtnStyleData = {
+    buttonText: 'GLOW',
+    buttonLink: '',
+    textColor: '#ffffff',
+    backgroundColor: '#06b6d4',
+    borderRadius: '8',
+    borderWidth: '0',
+    borderColor: '#000000',
+    shadowOffsetX: '0',
+    shadowOffsetY: '0',
+    shadowBlurRadius: '10',
+    shadowColor: '#06b6d480',
+    width: '200',
+    height: '50',
+    glowSize: '20',
+    glowIntensity: '1',
+};
+
+export const PULSE_BTN: AnimatedBtnStyleData = {
+    buttonText: 'PULSE',
+    buttonLink: '',
+    textColor: '#ffffff',
+    backgroundColor: '#ef4444',
+    borderRadius: '50',
+    borderWidth: '0',
+    borderColor: '#000000',
+    shadowOffsetX: '0',
+    shadowOffsetY: '4',
+    shadowBlurRadius: '10',
+    shadowColor: '#ef444480',
+    width: '200',
+    height: '50',
+    animationDuration: '2',
+    animationIntensity: '1.05',
+};
+
+export const SHAKE_BTN: AnimatedBtnStyleData = {
+    buttonText: 'SHAKE',
+    buttonLink: '',
+    textColor: '#ffffff',
+    backgroundColor: '#f97316',
+    borderRadius: '8',
+    borderWidth: '0',
+    borderColor: '#000000',
+    shadowOffsetX: '0',
+    shadowOffsetY: '4',
+    shadowBlurRadius: '10',
+    shadowColor: '#f9731680',
+    width: '200',
+    height: '50',
+    animationDuration: '0.5',
+    animationIntensity: '5',
+};
+
+export const SLIDE_BTN: AnimatedBtnStyleData = {
+    buttonText: 'SLIDE',
+    buttonLink: '',
+    textColor: '#ffffff',
+    backgroundColor: '#10b981',
+    borderRadius: '8',
+    borderWidth: '0',
+    borderColor: '#000000',
+    shadowOffsetX: '0',
+    shadowOffsetY: '4',
+    shadowBlurRadius: '10',
+    shadowColor: '#10b98180',
+    width: '200',
+    height: '50',
+    secondaryColor: '#059669',
+    animationDuration: '0.4',
+};
+
+export const RIPPLE_BTN: AnimatedBtnStyleData = {
+    buttonText: 'RIPPLE',
+    buttonLink: '',
+    textColor: '#ffffff',
+    backgroundColor: '#3b82f6',
+    borderRadius: '8',
+    borderWidth: '0',
+    borderColor: '#000000',
+    shadowOffsetX: '0',
+    shadowOffsetY: '4',
+    shadowBlurRadius: '10',
+    shadowColor: '#3b82f680',
+    width: '200',
+    height: '50',
+    animationDuration: '0.8',
+};
+
+// ============================================
 // Button Style Mapping
 // ============================================
 
@@ -402,6 +513,13 @@ export const BTN_STYLE: Record<string, ButtonStyleDataLegacy> = {
     MidnightBtn: MIDNIGHT_BTN,
     RoseGoldBtn: ROSE_GOLD_BTN,
     CyberBtn: CYBER_BTN,
+    // Animated Buttons
+    BounceBtn: BOUNCE_BTN,
+    GlowBtn: GLOW_BTN,
+    PulseBtn: PULSE_BTN,
+    ShakeBtn: SHAKE_BTN,
+    SlideBtn: SLIDE_BTN,
+    RippleBtn: RIPPLE_BTN,
 };
 
 // Button categories for UI organization
@@ -430,6 +548,15 @@ export const GRADIENT_BTN_STYLES = [
     'MidnightBtn',
     'RoseGoldBtn',
     'CyberBtn',
+] as const;
+
+export const ANIMATED_BTN_STYLES = [
+    'BounceBtn',
+    'GlowBtn',
+    'PulseBtn',
+    'ShakeBtn',
+    'SlideBtn',
+    'RippleBtn',
 ] as const;
 
 export const FORM_MENU = ['텍스트 & 링크', '색상', '테두리', '그림자', '크기'];

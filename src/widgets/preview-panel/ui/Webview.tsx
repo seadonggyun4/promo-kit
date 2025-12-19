@@ -21,7 +21,8 @@ import {
     ImageOverlayStyle,
     ImageOverlayStyleDataLegacy,
 } from '@/shared/types';
-import { SimpleBtn, GradationBtn } from '@/entities/button';
+import { SimpleBtn, GradationBtn, BounceBtn, GlowBtn, PulseBtn, ShakeBtn, SlideBtn, RippleBtn } from '@/entities/button';
+import { SIMPLE_BTN_STYLES, ANIMATED_BTN_STYLES } from '@/shared/constants';
 import { TextElement } from '@/entities/text';
 import { ImageOverlayElement, ImageOverlayContainer } from '@/entities/image-overlay';
 
@@ -30,55 +31,87 @@ interface WebviewProps {
     uploadedImage: string | ArrayBuffer | null;
 }
 
+// Helper functions for button type checking
+const isSimpleBtnStyle = (style: ButtonStyle): boolean => {
+    return (SIMPLE_BTN_STYLES as readonly string[]).includes(style);
+};
+
+const isAnimatedBtnStyle = (style: ButtonStyle): boolean => {
+    return (ANIMATED_BTN_STYLES as readonly string[]).includes(style);
+};
+
+// Animated button components map
+const AnimatedComponents = {
+    BounceBtn,
+    GlowBtn,
+    PulseBtn,
+    ShakeBtn,
+    SlideBtn,
+    RippleBtn,
+} as const;
+
 const renderButton = (style: ButtonStyle, styleData: ButtonStyleDataLegacy): React.ReactNode => {
-    if (style === 'SimpleBtn') {
+    const commonStyles = {
+        width: `${styleData.width || 200}px`,
+        height: `${styleData.height || 50}px`,
+        borderWidth: `${styleData.borderWidth}px`,
+        borderStyle: 'solid' as const,
+        borderColor: styleData.borderColor,
+        boxShadow: `${styleData.shadowOffsetX}px ${styleData.shadowOffsetY}px ${styleData.shadowBlurRadius}px ${styleData.shadowColor}`,
+        pointerEvents: 'none' as const,
+    };
+
+    // Handle animated buttons
+    if (isAnimatedBtnStyle(style)) {
+        const Component = AnimatedComponents[style as keyof typeof AnimatedComponents];
+        return (
+            <Component
+                as="div"
+                $backgroundColor={styleData.backgroundColor}
+                $textColor={styleData.textColor}
+                $borderRadius={Number(styleData.borderRadius)}
+                $secondaryColor={styleData.secondaryColor}
+                $animationDuration={styleData.animationDuration ? Number(styleData.animationDuration) : undefined}
+                $animationIntensity={styleData.animationIntensity ? Number(styleData.animationIntensity) : undefined}
+                $glowSize={styleData.glowSize ? Number(styleData.glowSize) : undefined}
+                $glowIntensity={styleData.glowIntensity ? Number(styleData.glowIntensity) : undefined}
+                style={commonStyles}
+            >
+                {styleData.buttonText}
+            </Component>
+        );
+    }
+
+    // Handle simple buttons (including all variations like PrimaryBtn, DangerBtn, etc.)
+    if (isSimpleBtnStyle(style)) {
         return (
             <SimpleBtn
                 as="div"
                 $backgroundColor={styleData.backgroundColor}
                 $textColor={styleData.textColor}
                 $borderRadius={Number(styleData.borderRadius)}
-                style={{
-                    width: `${styleData.width || 200}px`,
-                    height: `${styleData.height || 50}px`,
-                    borderWidth: `${styleData.borderWidth}px`,
-                    borderStyle: 'solid',
-                    borderColor: styleData.borderColor,
-                    boxShadow: `${styleData.shadowOffsetX}px ${styleData.shadowOffsetY}px ${styleData.shadowBlurRadius}px ${styleData.shadowColor}`,
-                    pointerEvents: 'none',
-                }}
+                style={commonStyles}
             >
                 {styleData.buttonText}
             </SimpleBtn>
         );
     }
 
-    if (style === 'GradationBtn') {
-        return (
-            <GradationBtn
-                as="div"
-                $textColor={styleData.textColor}
-                $gradationColor1={styleData.gradationColor1}
-                $gradationColor2={styleData.gradationColor2}
-                $gradationColor3={styleData.gradationColor3}
-                $gradationColor4={styleData.gradationColor4}
-                $borderRadius={Number(styleData.borderRadius)}
-                style={{
-                    width: `${styleData.width || 200}px`,
-                    height: `${styleData.height || 50}px`,
-                    borderWidth: `${styleData.borderWidth}px`,
-                    borderStyle: 'solid',
-                    borderColor: styleData.borderColor,
-                    boxShadow: `${styleData.shadowOffsetX}px ${styleData.shadowOffsetY}px ${styleData.shadowBlurRadius}px ${styleData.shadowColor}`,
-                    pointerEvents: 'none',
-                }}
-            >
-                {styleData.buttonText}
-            </GradationBtn>
-        );
-    }
-
-    return null;
+    // Handle gradient buttons (fallback for all other button styles)
+    return (
+        <GradationBtn
+            as="div"
+            $textColor={styleData.textColor}
+            $gradationColor1={styleData.gradationColor1}
+            $gradationColor2={styleData.gradationColor2}
+            $gradationColor3={styleData.gradationColor3}
+            $gradationColor4={styleData.gradationColor4}
+            $borderRadius={Number(styleData.borderRadius)}
+            style={commonStyles}
+        >
+            {styleData.buttonText}
+        </GradationBtn>
+    );
 };
 
 const renderText = (_style: TextStyle, styleData: TextStyleDataLegacy): React.ReactNode => {

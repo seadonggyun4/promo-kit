@@ -2,11 +2,12 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { SimpleBtnForm } from './SimpleBtnForm';
 import { GradationBtnForm } from './GradationBtnForm';
-import { SimpleBtn, GradationBtn } from '@/entities/button';
+import { AnimatedBtnForm } from './AnimatedBtnForm';
+import { SimpleBtn, GradationBtn, BounceBtn, GlowBtn, PulseBtn, ShakeBtn, SlideBtn, RippleBtn } from '@/entities/button';
 import { useElementsStore } from '@/shared/store';
-import { useSimpleBtn, useGradationBtn } from '../model';
-import { ButtonStyle, ButtonStyleDataLegacy, SimpleBtnStyle } from '@/shared/types';
-import { SIMPLE_BTN_STYLES } from '@/shared/constants';
+import { useSimpleBtn, useGradationBtn, useAnimatedBtn } from '../model';
+import { ButtonStyle, ButtonStyleDataLegacy, SimpleBtnStyle, AnimatedBtnStyle } from '@/shared/types';
+import { SIMPLE_BTN_STYLES, ANIMATED_BTN_STYLES } from '@/shared/constants';
 
 interface ButtonSetModalProps {
     selectedBtn: ButtonStyle;
@@ -18,21 +19,73 @@ const isSimpleBtnStyle = (style: ButtonStyle): style is SimpleBtnStyle => {
     return (SIMPLE_BTN_STYLES as readonly string[]).includes(style);
 };
 
+// Helper to determine if a button style is an animated button
+const isAnimatedBtnStyle = (style: ButtonStyle): style is AnimatedBtnStyle => {
+    return (ANIMATED_BTN_STYLES as readonly string[]).includes(style);
+};
+
 export function ButtonSetModal({ selectedBtn, closeModal }: ButtonSetModalProps) {
     const { t } = useTranslation();
     const { createSampleButton, updateSampleButton } = useElementsStore();
     const isSimpleBtn = isSimpleBtnStyle(selectedBtn);
+    const isAnimatedBtn = isAnimatedBtnStyle(selectedBtn);
+    // Each button type uses its own hook
     const simpleBtnHook = useSimpleBtn(isSimpleBtn ? selectedBtn : undefined);
-    const gradationBtnHook = useGradationBtn(!isSimpleBtn ? selectedBtn : undefined);
+    const gradationBtnHook = useGradationBtn(!isSimpleBtn && !isAnimatedBtn ? selectedBtn : undefined);
+    const animatedBtnHook = useAnimatedBtn(isAnimatedBtn ? selectedBtn : undefined);
 
     const getButtonStyleData = (): ButtonStyleDataLegacy => {
+        if (isAnimatedBtn) {
+            return animatedBtnHook.buttonStyle;
+        }
         if (isSimpleBtn) {
             return simpleBtnHook.buttonStyle;
         }
         return gradationBtnHook.buttonStyle;
     };
 
+    const renderAnimatedButton = (style: ButtonStyleDataLegacy) => {
+        const commonProps = {
+            $backgroundColor: style.backgroundColor,
+            $textColor: style.textColor,
+            $borderRadius: Number(style.borderRadius),
+            $secondaryColor: style.secondaryColor,
+            $animationDuration: style.animationDuration ? Number(style.animationDuration) : undefined,
+            $animationIntensity: style.animationIntensity ? Number(style.animationIntensity) : undefined,
+            $glowSize: style.glowSize ? Number(style.glowSize) : undefined,
+            $glowIntensity: style.glowIntensity ? Number(style.glowIntensity) : undefined,
+            href: style.buttonLink,
+            target: '_blank' as const,
+            onClick: (e: React.MouseEvent) => e.preventDefault(),
+            style: {
+                width: `${style.width}px`,
+                height: `${style.height}px`,
+                borderWidth: `${style.borderWidth}px`,
+                borderStyle: 'solid' as const,
+                borderColor: style.borderColor,
+                boxShadow: `${style.shadowOffsetX}px ${style.shadowOffsetY}px ${style.shadowBlurRadius}px ${style.shadowColor}`,
+            },
+        };
+
+        const AnimatedComponents: Record<AnimatedBtnStyle, typeof BounceBtn> = {
+            BounceBtn,
+            GlowBtn,
+            PulseBtn,
+            ShakeBtn,
+            SlideBtn,
+            RippleBtn,
+        };
+
+        const Component = AnimatedComponents[selectedBtn as AnimatedBtnStyle];
+        return <Component {...commonProps}>{style.buttonText}</Component>;
+    };
+
     const renderPreviewButton = () => {
+        if (isAnimatedBtn) {
+            const style = animatedBtnHook.buttonStyle;
+            return renderAnimatedButton(style);
+        }
+
         if (isSimpleBtn) {
             const style = simpleBtnHook.buttonStyle;
             return (
@@ -103,7 +156,8 @@ export function ButtonSetModal({ selectedBtn, closeModal }: ButtonSetModalProps)
                 </ElementWrapper>
                 <ElementSettingBox>
                     {isSimpleBtn && <SimpleBtnForm simpleBtnHook={simpleBtnHook} />}
-                    {!isSimpleBtn && <GradationBtnForm gradationBtnHook={gradationBtnHook} />}
+                    {isAnimatedBtn && <AnimatedBtnForm animatedBtnHook={animatedBtnHook} />}
+                    {!isSimpleBtn && !isAnimatedBtn && <GradationBtnForm gradationBtnHook={gradationBtnHook} />}
                     <BtnWrapper>
                         <button type="button" className="activeBtn" onClick={addButton}>{t('common.register')}</button>
                         <button type="button" className="cancelBtn" onClick={closeModal}>{t('common.cancel')}</button>
