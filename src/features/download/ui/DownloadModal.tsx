@@ -364,6 +364,28 @@ export function DownloadModal({
                                             />
                                             <span>{t('download.semanticButtons')}</span>
                                         </CheckboxItem>
+                                        <CheckboxItem>
+                                            <input
+                                                type="checkbox"
+                                                checked={a11yOptions.includeRoles}
+                                                onChange={(e) => setA11yOptions(prev => ({
+                                                    ...prev,
+                                                    includeRoles: e.target.checked
+                                                }))}
+                                            />
+                                            <span>{t('download.roles')}</span>
+                                        </CheckboxItem>
+                                        <CheckboxItem>
+                                            <input
+                                                type="checkbox"
+                                                checked={a11yOptions.includeAriaDescribedby}
+                                                onChange={(e) => setA11yOptions(prev => ({
+                                                    ...prev,
+                                                    includeAriaDescribedby: e.target.checked
+                                                }))}
+                                            />
+                                            <span>{t('download.ariaDescribedby')}</span>
+                                        </CheckboxItem>
                                     </CheckboxGroup>
                                 </OptionDetails>
                             )}

@@ -22,6 +22,8 @@ export interface A11yOptions {
     includeAriaLabels: boolean;
     includeFocusStyles: boolean;
     useSemanticButtons: boolean; // Use <button> instead of <a> where appropriate
+    includeRoles: boolean; // Include role attributes (banner, main, navigation)
+    includeAriaDescribedby: boolean; // Include aria-describedby for button descriptions
 }
 
 // SEO options (for vanilla HTML only)
@@ -76,6 +78,8 @@ export const DEFAULT_A11Y_OPTIONS: A11yOptions = {
     includeAriaLabels: true,
     includeFocusStyles: true,
     useSemanticButtons: false,
+    includeRoles: true,
+    includeAriaDescribedby: true,
 };
 
 export const DEFAULT_SEO_OPTIONS: SeoOptions = {

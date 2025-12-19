@@ -165,11 +165,54 @@ const generateSeoMetaTags = (seo: SeoOptions): string => {
 };
 
 // Generate aria attributes for accessibility
-const generateAriaAttributes = (element: ElementData, a11y: A11yOptions): string => {
-    if (!a11y.enabled || !a11y.includeAriaLabels) return '';
+const generateAriaAttributes = (element: ElementData, index: number, a11y: A11yOptions): string => {
+    if (!a11y.enabled) return '';
 
-    const buttonText = element.styleData.buttonText || 'Button';
-    return ` aria-label="${buttonText}" role="button"`;
+    let attrs = '';
+
+    if (a11y.includeAriaLabels) {
+        const buttonText = element.styleData.buttonText || 'Button';
+        attrs += ` aria-label="${buttonText}"`;
+    }
+
+    if (a11y.includeAriaDescribedby) {
+        attrs += ` aria-describedby="btn-desc-${index}"`;
+    }
+
+    return attrs;
+};
+
+// Generate hidden description elements for aria-describedby
+const generateAriaDescriptions = (elements: ElementData[], a11y: A11yOptions): string => {
+    if (!a11y.enabled || !a11y.includeAriaDescribedby) return '';
+
+    return elements.map((element, index) => {
+        const buttonText = element.styleData.buttonText || 'Button';
+        const link = element.styleData.buttonLink || '#';
+        return `    <span id="btn-desc-${index}" class="sr-only">${buttonText} - ${link} 링크로 이동합니다</span>`;
+    }).join('\n');
+};
+
+// Generate role attributes for landmark regions
+const generateRoleAttributes = (a11y: A11yOptions, role: 'main' | 'banner' | 'navigation' | 'group'): string => {
+    if (!a11y.enabled || !a11y.includeRoles) return '';
+    return ` role="${role}"`;
+};
+
+// Generate screen reader only CSS class
+const generateSrOnlyCSS = (): string => {
+    return `
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}`;
 };
 
 // Generate CSS styles for a button
@@ -365,6 +408,8 @@ export const generateVanillaHTML = (
     });
 
     // Container styles
+    const srOnlyStyles = a11y.enabled && a11y.includeAriaDescribedby ? generateSrOnlyCSS() : '';
+
     const containerStyles = `
 .promo-container {
     position: relative;
@@ -384,7 +429,7 @@ export const generateVanillaHTML = (
     left: 0;
     width: 100%;
     height: 100%;
-}`;
+}${srOnlyStyles}`;
 
     const responsiveContainerStyles = generateResponsiveContainerCSS(responsive);
 
@@ -397,7 +442,7 @@ export const generateVanillaHTML = (
 
     // Generate HTML
     const buttonsHTML = elements.map((element, index) => {
-        const ariaAttrs = generateAriaAttributes(element, a11y);
+        const ariaAttrs = generateAriaAttributes(element, index, a11y);
         const buttonTag = a11y.enabled && a11y.useSemanticButtons ? 'button' : 'a';
         const linkAttr = buttonTag === 'a'
             ? `href="${element.styleData.buttonLink}" target="_blank" rel="noopener noreferrer"`
@@ -411,29 +456,55 @@ export const generateVanillaHTML = (
         return `    <${buttonTag} ${linkAttr} class="button-${index}"${ariaAttrs}>${element.styleData.buttonText}</${buttonTag}>`;
     }).join('\n');
 
+    // Generate aria-describedby descriptions
+    const ariaDescriptions = generateAriaDescriptions(elements, a11y);
+
     // Generate image alt text
     const imageAlt = a11y.enabled && a11y.includeAriaLabels
         ? 'Promotion page banner image'
         : 'Promotion';
 
+    // Generate role attributes
+    const mainRole = generateRoleAttributes(a11y, 'main');
+    const groupRole = generateRoleAttributes(a11y, 'group');
+    const groupAriaLabel = a11y.enabled ? ' aria-label="프로모션 버튼 영역"' : '';
+
     const seoMetaTags = generateSeoMetaTags(seo);
+
+    // Tailwind sr-only class for screen reader only content
+    const tailwindSrOnlyStyle = styleType === 'tailwind' && a11y.enabled && a11y.includeAriaDescribedby
+        ? `
+    <style>
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>`
+        : '';
 
     const htmlContent = `<!DOCTYPE html>
 <html lang="ko">
 <head>
     ${seoMetaTags}
     ${styleType === 'tailwind'
-        ? '<script src="https://cdn.tailwindcss.com"></script>'
+        ? '<script src="https://cdn.tailwindcss.com"></script>' + tailwindSrOnlyStyle
         : `<link rel="stylesheet" href="styles.${styleExtension}">`
     }
 </head>
 <body>
-    <main class="promo-container"${styleType === 'tailwind' ? ' style="position: relative; width: 100%; max-width: 100%;"' : ''}>
+    <main class="promo-container"${styleType === 'tailwind' ? ' style="position: relative; width: 100%; max-width: 100%;"' : ''}${mainRole}>
         <img src="${imageSrc}" alt="${imageAlt}" class="promo-image"${styleType === 'tailwind' ? ' style="width: 100%; height: auto; display: block;"' : ''} />
-        <div class="buttons-container"${styleType === 'tailwind' ? ' style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"' : ''}${a11y.enabled ? ' role="group" aria-label="프로모션 버튼 영역"' : ''}>
+        <div class="buttons-container"${styleType === 'tailwind' ? ' style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"' : ''}${groupRole}${groupAriaLabel}>
 ${buttonsHTML}
         </div>
-    </main>
+${ariaDescriptions ? ariaDescriptions + '\n' : ''}    </main>
 </body>
 </html>`;
 
@@ -457,10 +528,32 @@ export const generateReactCode = (
     const responsive = options.responsive || DEFAULT_RESPONSIVE_OPTIONS;
 
     // Generate aria props helper
-    const getAriaProps = (element: ElementData): string => {
-        if (!a11y.enabled || !a11y.includeAriaLabels) return '';
-        return `aria-label="${element.styleData.buttonText || 'Button'}" role="button"`;
+    const getAriaProps = (element: ElementData, index: number): string => {
+        if (!a11y.enabled) return '';
+        let props = '';
+        if (a11y.includeAriaLabels) {
+            props += `aria-label="${element.styleData.buttonText || 'Button'}"`;
+        }
+        if (a11y.includeAriaDescribedby) {
+            props += `${props ? ' ' : ''}aria-describedby="btn-desc-${index}"`;
+        }
+        return props;
     };
+
+    // Generate aria descriptions for React
+    const generateReactAriaDescriptions = (): string => {
+        if (!a11y.enabled || !a11y.includeAriaDescribedby) return '';
+        return elements.map((element, index) => {
+            const buttonText = element.styleData.buttonText || 'Button';
+            const link = element.styleData.buttonLink || '#';
+            return `            <span id="btn-desc-${index}" className="sr-only">${buttonText} - ${link} 링크로 이동합니다</span>`;
+        }).join('\n');
+    };
+
+    // Generate role attributes
+    const mainRole = a11y.enabled && a11y.includeRoles ? ' role="main"' : '';
+    const groupRole = a11y.enabled && a11y.includeRoles ? ' role="group"' : '';
+    const groupAriaLabel = a11y.enabled ? ' aria-label="프로모션 버튼 영역"' : '';
 
     if (styleType === 'styled-components') {
         const focusStylesBlock = a11y.enabled && a11y.includeFocusStyles ? `
@@ -535,16 +628,32 @@ export const generateReactCode = (
         }).join('\n\n');
 
         const buttonElements = elements.map((element, index) => {
-            const ariaProps = getAriaProps(element);
+            const ariaProps = getAriaProps(element, index);
             if (a11y.enabled && a11y.useSemanticButtons) {
                 return `            <Button${index} onClick={() => window.open('${element.styleData.buttonLink}', '_blank')} ${ariaProps}>${element.styleData.buttonText}</Button${index}>`;
             }
             return `            <Button${index} href="${element.styleData.buttonLink}" target="_blank" rel="noopener noreferrer" ${ariaProps}>${element.styleData.buttonText}</Button${index}>`;
         }).join('\n');
 
+        const ariaDescriptions = generateReactAriaDescriptions();
+
         const imageAlt = a11y.enabled && a11y.includeAriaLabels
             ? 'Promotion page banner image'
             : 'Promotion';
+
+        const srOnlyStyle = a11y.enabled && a11y.includeAriaDescribedby ? `
+
+const SrOnly = styled.span\`
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+\`;` : '';
 
         const componentContent = `import styled from 'styled-components';
 import promoImage from './promotionPage.jpeg';
@@ -569,16 +678,16 @@ const ButtonsContainer = styled.div\`
     left: 0;
     width: 100%;
     height: 100%;
-\`;
+\`;${srOnlyStyle}
 
 export function PromoPage() {
     return (
-        <Container>
+        <Container${mainRole}>
             <PromoImage src={promoImage} alt="${imageAlt}" />
-            <ButtonsContainer${a11y.enabled ? ' role="group" aria-label="프로모션 버튼 영역"' : ''}>
+            <ButtonsContainer${groupRole}${groupAriaLabel}>
 ${buttonElements}
             </ButtonsContainer>
-        </Container>
+${ariaDescriptions ? ariaDescriptions.replace(/className="sr-only"/g, '') + '\n' : ''}        </Container>
     );
 }
 `;
@@ -659,16 +768,32 @@ ${buttonElements}
         }).join('\n\n');
 
         const buttonElements = elements.map((element, index) => {
-            const ariaProps = getAriaProps(element);
+            const ariaProps = getAriaProps(element, index);
             if (a11y.enabled && a11y.useSemanticButtons) {
                 return `            <button onClick={() => window.open('${element.styleData.buttonLink}', '_blank')} css={button${index}Style} ${ariaProps}>${element.styleData.buttonText}</button>`;
             }
             return `            <a href="${element.styleData.buttonLink}" target="_blank" rel="noopener noreferrer" css={button${index}Style} ${ariaProps}>${element.styleData.buttonText}</a>`;
         }).join('\n');
 
+        const ariaDescriptions = generateReactAriaDescriptions();
+
         const imageAlt = a11y.enabled && a11y.includeAriaLabels
             ? 'Promotion page banner image'
             : 'Promotion';
+
+        const srOnlyStyle = a11y.enabled && a11y.includeAriaDescribedby ? `
+
+const srOnlyStyle = css\`
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+\`;` : '';
 
         const componentContent = `/** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
@@ -694,16 +819,16 @@ const buttonsContainerStyle = css\`
     left: 0;
     width: 100%;
     height: 100%;
-\`;
+\`;${srOnlyStyle}
 
 export function PromoPage() {
     return (
-        <main css={containerStyle}>
+        <main css={containerStyle}${mainRole}>
             <img src={promoImage} alt="${imageAlt}" css={imageStyle} />
-            <div css={buttonsContainerStyle}${a11y.enabled ? ' role="group" aria-label="프로모션 버튼 영역"' : ''}>
+            <div css={buttonsContainerStyle}${groupRole}${groupAriaLabel}>
 ${buttonElements}
             </div>
-        </main>
+${ariaDescriptions ? ariaDescriptions.replace(/className="sr-only"/g, 'css={srOnlyStyle}') + '\n' : ''}        </main>
     );
 }
 `;
@@ -714,7 +839,7 @@ ${buttonElements}
         });
 
     } else if (styleType === 'tailwind') {
-        const buttonElements = elements.map((element) => {
+        const buttonElements = elements.map((element, index) => {
             const { styleData, x, y } = element;
             const isGradient = isGradientButton(element.style);
 
@@ -736,7 +861,7 @@ ${buttonElements}
             const focusClasses = a11y.enabled && a11y.includeFocusStyles
                 ? ' focus:outline-2 focus:outline-blue-500 focus:outline-offset-2'
                 : '';
-            const ariaProps = getAriaProps(element);
+            const ariaProps = getAriaProps(element, index);
 
             if (a11y.enabled && a11y.useSemanticButtons) {
                 return `            <button
@@ -761,6 +886,8 @@ ${buttonElements}
             </a>`;
         }).join('\n');
 
+        const ariaDescriptions = generateReactAriaDescriptions();
+
         const imageAlt = a11y.enabled && a11y.includeAriaLabels
             ? 'Promotion page banner image'
             : 'Promotion';
@@ -773,12 +900,12 @@ ${buttonElements}
 
 export function PromoPage() {
     return (
-        <main className="${responsiveClasses}">
+        <main className="${responsiveClasses}"${mainRole}>
             <img src={promoImage} alt="${imageAlt}" className="w-full h-auto block" />
-            <div className="absolute top-0 left-0 w-full h-full"${a11y.enabled ? ' role="group" aria-label="프로모션 버튼 영역"' : ''}>
+            <div className="absolute top-0 left-0 w-full h-full"${groupRole}${groupAriaLabel}>
 ${buttonElements}
             </div>
-        </main>
+${ariaDescriptions ? ariaDescriptions.replace(/className="sr-only"/g, 'className="sr-only absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0"') + '\n' : ''}        </main>
     );
 }
 `;
@@ -791,6 +918,8 @@ ${buttonElements}
     } else {
         // CSS or SCSS
         const styleExtension = styleType === 'scss' ? 'scss' : 'css';
+        const srOnlyStyles = a11y.enabled && a11y.includeAriaDescribedby ? generateSrOnlyCSS() : '';
+
         let stylesContent = `
 .promo-container {
     position: relative;
@@ -810,7 +939,7 @@ ${buttonElements}
     left: 0;
     width: 100%;
     height: 100%;
-}`;
+}${srOnlyStyles}`;
 
         const responsiveContainerStyles = generateResponsiveContainerCSS(responsive);
         stylesContent += responsiveContainerStyles;
@@ -829,12 +958,14 @@ ${buttonElements}
         });
 
         const buttonElements = elements.map((element, index) => {
-            const ariaProps = getAriaProps(element);
+            const ariaProps = getAriaProps(element, index);
             if (a11y.enabled && a11y.useSemanticButtons) {
                 return `            <button onClick={() => window.open('${element.styleData.buttonLink}', '_blank')} className="button-${index}" ${ariaProps}>${element.styleData.buttonText}</button>`;
             }
             return `            <a href="${element.styleData.buttonLink}" target="_blank" rel="noopener noreferrer" className="button-${index}" ${ariaProps}>${element.styleData.buttonText}</a>`;
         }).join('\n');
+
+        const ariaDescriptions = generateReactAriaDescriptions();
 
         const imageAlt = a11y.enabled && a11y.includeAriaLabels
             ? 'Promotion page banner image'
@@ -845,12 +976,12 @@ import promoImage from './promotionPage.jpeg';
 
 export function PromoPage() {
     return (
-        <main className="promo-container">
+        <main className="promo-container"${mainRole}>
             <img src={promoImage} alt="${imageAlt}" className="promo-image" />
-            <div className="buttons-container"${a11y.enabled ? ' role="group" aria-label="프로모션 버튼 영역"' : ''}>
+            <div className="buttons-container"${groupRole}${groupAriaLabel}>
 ${buttonElements}
             </div>
-        </main>
+${ariaDescriptions ? ariaDescriptions + '\n' : ''}        </main>
     );
 }
 `;
@@ -875,13 +1006,35 @@ export const generateVueCode = (
     const a11y = options.a11y || DEFAULT_A11Y_OPTIONS;
     const responsive = options.responsive || DEFAULT_RESPONSIVE_OPTIONS;
 
-    const getAriaAttrs = (element: ElementData): string => {
-        if (!a11y.enabled || !a11y.includeAriaLabels) return '';
-        return ` aria-label="${element.styleData.buttonText || 'Button'}" role="button"`;
+    const getAriaAttrs = (element: ElementData, index: number): string => {
+        if (!a11y.enabled) return '';
+        let attrs = '';
+        if (a11y.includeAriaLabels) {
+            attrs += ` aria-label="${element.styleData.buttonText || 'Button'}"`;
+        }
+        if (a11y.includeAriaDescribedby) {
+            attrs += ` aria-describedby="btn-desc-${index}"`;
+        }
+        return attrs;
+    };
+
+    // Generate role attributes
+    const mainRole = a11y.enabled && a11y.includeRoles ? ' role="main"' : '';
+    const groupRole = a11y.enabled && a11y.includeRoles ? ' role="group"' : '';
+    const groupAriaLabel = a11y.enabled ? ' aria-label="프로모션 버튼 영역"' : '';
+
+    // Generate aria descriptions for Vue
+    const generateVueAriaDescriptions = (): string => {
+        if (!a11y.enabled || !a11y.includeAriaDescribedby) return '';
+        return elements.map((element, index) => {
+            const buttonText = element.styleData.buttonText || 'Button';
+            const link = element.styleData.buttonLink || '#';
+            return `        <span id="btn-desc-${index}" class="sr-only">${buttonText} - ${link} 링크로 이동합니다</span>`;
+        }).join('\n');
     };
 
     const buttonElements = elements.map((element, index) => {
-        const ariaAttrs = getAriaAttrs(element);
+        const ariaAttrs = getAriaAttrs(element, index);
 
         if (styleType === 'tailwind') {
             const { styleData, x, y } = element;
@@ -932,6 +1085,8 @@ export const generateVueCode = (
         return `        <a href="${element.styleData.buttonLink}" target="_blank" rel="noopener noreferrer" class="button-${index}"${ariaAttrs}>${element.styleData.buttonText}</a>`;
     }).join('\n');
 
+    const srOnlyStyles = a11y.enabled && a11y.includeAriaDescribedby ? generateSrOnlyCSS() : '';
+
     let stylesContent = '';
     if (styleType !== 'tailwind') {
         stylesContent = `
@@ -953,7 +1108,7 @@ export const generateVueCode = (
     left: 0;
     width: 100%;
     height: 100%;
-}`;
+}${srOnlyStyles}`;
 
         const responsiveContainerStyles = generateResponsiveContainerCSS(responsive);
         stylesContent += responsiveContainerStyles;
@@ -967,12 +1122,33 @@ export const generateVueCode = (
         });
     }
 
+    const ariaDescriptions = generateVueAriaDescriptions();
+
     const imageAlt = a11y.enabled && a11y.includeAriaLabels
         ? 'Promotion page banner image'
         : 'Promotion';
 
+    const tailwindSrOnlyClass = styleType === 'tailwind' && a11y.enabled && a11y.includeAriaDescribedby
+        ? `
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}`
+        : '';
+
     const styleTag = styleType === 'tailwind'
-        ? ''
+        ? (tailwindSrOnlyClass ? `
+
+<style scoped>
+${tailwindSrOnlyClass}
+</style>` : '')
         : `
 
 <style${styleType === 'scss' ? ' lang="scss"' : ''} scoped>
@@ -991,12 +1167,12 @@ const openLink = (url: string) => {
 ` : '';
 
     const componentContent = `<template>
-    <main class="${responsiveClasses}">
+    <main class="${responsiveClasses}"${mainRole}>
         <img :src="promoImage" alt="${imageAlt}" class="${styleType === 'tailwind' ? 'w-full h-auto block' : 'promo-image'}" />
-        <div class="${styleType === 'tailwind' ? 'absolute top-0 left-0 w-full h-full' : 'buttons-container'}"${a11y.enabled ? ' role="group" aria-label="프로모션 버튼 영역"' : ''}>
+        <div class="${styleType === 'tailwind' ? 'absolute top-0 left-0 w-full h-full' : 'buttons-container'}"${groupRole}${groupAriaLabel}>
 ${buttonElements}
         </div>
-    </main>
+${ariaDescriptions ? ariaDescriptions + '\n' : ''}    </main>
 </template>
 
 <script setup lang="ts">
