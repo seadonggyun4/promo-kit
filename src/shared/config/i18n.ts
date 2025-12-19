@@ -11,7 +11,7 @@ const resources = {
     ja: { translation: ja },
 };
 
-const savedLanguage = localStorage.getItem('language') || 'en';
+const savedLanguage = localStorage.getItem('language') || 'ko';
 
 i18n.use(initReactI18next).init({
     resources,
