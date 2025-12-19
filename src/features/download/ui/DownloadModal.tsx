@@ -46,14 +46,32 @@ const FRAMEWORKS: { value: FrameworkType; labelKey: string }[] = [
     { value: 'vanilla', labelKey: 'download.vanillaHtml' },
     { value: 'react', labelKey: 'download.react' },
     { value: 'vue', labelKey: 'download.vue' },
+    { value: 'svelte', labelKey: 'download.svelte' },
+    { value: 'angular', labelKey: 'download.angular' },
+    { value: 'solid', labelKey: 'download.solid' },
+    { value: 'preact', labelKey: 'download.preact' },
+    { value: 'astro', labelKey: 'download.astro' },
+    { value: 'qwik', labelKey: 'download.qwik' },
+    { value: 'lit', labelKey: 'download.lit' },
 ];
 
 const STYLE_OPTIONS: { value: StyleType; labelKey: string; frameworks: FrameworkType[] }[] = [
-    { value: 'css', labelKey: 'download.css', frameworks: ['vanilla', 'react', 'vue'] },
-    { value: 'scss', labelKey: 'download.scss', frameworks: ['vanilla', 'react', 'vue'] },
-    { value: 'styled-components', labelKey: 'download.styledComponents', frameworks: ['react'] },
-    { value: 'emotion', labelKey: 'download.emotion', frameworks: ['react'] },
-    { value: 'tailwind', labelKey: 'download.tailwind', frameworks: ['vanilla', 'react', 'vue'] },
+    { value: 'css', labelKey: 'download.css', frameworks: ['vanilla', 'react', 'vue', 'svelte', 'angular', 'solid', 'preact', 'astro', 'qwik', 'lit'] },
+    { value: 'scss', labelKey: 'download.scss', frameworks: ['vanilla', 'react', 'vue', 'svelte', 'angular', 'solid', 'preact', 'astro', 'qwik', 'lit'] },
+    { value: 'styled-components', labelKey: 'download.styledComponents', frameworks: ['react', 'preact'] },
+    { value: 'emotion', labelKey: 'download.emotion', frameworks: ['react', 'preact', 'solid'] },
+    { value: 'tailwind', labelKey: 'download.tailwind', frameworks: ['vanilla', 'react', 'vue', 'svelte', 'angular', 'solid', 'preact', 'astro', 'qwik', 'lit'] },
+    { value: 'css-modules', labelKey: 'download.cssModules', frameworks: ['react', 'vue', 'svelte', 'solid', 'preact', 'astro', 'qwik'] },
+    { value: 'unocss', labelKey: 'download.unocss', frameworks: ['vanilla', 'react', 'vue', 'svelte', 'solid', 'preact', 'astro', 'qwik', 'lit'] },
+    { value: 'panda-css', labelKey: 'download.pandaCss', frameworks: ['react', 'solid', 'preact', 'qwik'] },
+    { value: 'vanilla-extract', labelKey: 'download.vanillaExtract', frameworks: ['react', 'solid', 'preact', 'qwik'] },
+    { value: 'stitches', labelKey: 'download.stitches', frameworks: ['react', 'preact'] },
+    { value: 'less', labelKey: 'download.less', frameworks: ['vanilla', 'react', 'vue', 'angular', 'svelte', 'solid', 'preact', 'astro', 'qwik', 'lit'] },
+    { value: 'stylus', labelKey: 'download.stylus', frameworks: ['vanilla', 'react', 'vue', 'svelte', 'solid', 'preact', 'astro'] },
+    { value: 'bootstrap', labelKey: 'download.bootstrap', frameworks: ['vanilla', 'react', 'vue', 'angular', 'svelte', 'solid', 'preact', 'astro', 'lit'] },
+    { value: 'bulma', labelKey: 'download.bulma', frameworks: ['vanilla', 'react', 'vue', 'svelte', 'solid', 'preact', 'astro', 'lit'] },
+    { value: 'chakra-ui', labelKey: 'download.chakraUi', frameworks: ['react'] },
+    { value: 'mui', labelKey: 'download.mui', frameworks: ['react'] },
 ];
 
 // Framework Icons as SVG
@@ -82,6 +100,60 @@ const VueIcon = () => (
     </svg>
 );
 
+const SvelteIcon = () => (
+    <svg viewBox="0 0 32 32" width="28" height="28">
+        <path fill="#FF3E00" d="M25.5 6.5C23.2 3.2 18.7 2 15.1 4L8.4 8.4c-1.8 1.2-3 3-3.4 5.1-.3 1.7 0 3.5.8 5-.5.8-.8 1.7-1 2.7-.4 2.1.1 4.2 1.3 6C8.4 30.5 13 31.7 16.6 29.7l6.7-4.4c1.8-1.2 3-3 3.4-5.1.3-1.7 0-3.5-.8-5 .5-.8.8-1.7 1-2.7.4-2.1-.1-4.2-1.4-6z"/>
+        <path fill="#fff" d="M13.7 26.4c-2.3.6-4.7-.4-5.8-2.4-.6-1-.8-2.2-.5-3.4l.2-.7.6.4c1 .7 2.1 1.1 3.3 1.3l.3.1v.3c0 .4.2.9.5 1.2.5.6 1.4.8 2.1.5l6.7-4.4c.4-.2.6-.6.7-1 .1-.4 0-.9-.3-1.2-.5-.6-1.4-.8-2.1-.5l-2.5 1.7c-1.8 1.2-4.3.9-5.7-.7-.7-.8-1-1.8-.9-2.9.2-1.1.8-2 1.7-2.6l6.7-4.4c1.8-1.2 4.3-.9 5.8.7.6 1 .8 2.2.5 3.4l-.2.7-.6-.4c-1-.7-2.1-1.1-3.3-1.3l-.3-.1v-.3c0-.4-.2-.9-.5-1.2-.5-.6-1.4-.8-2.1-.5l-6.7 4.4c-.4.2-.6.6-.7 1-.1.4 0 .9.3 1.2.5.6 1.4.8 2.1.5l2.5-1.7c1.8-1.2 4.3-.9 5.8.7.7.8 1 1.8.9 2.9-.2 1.1-.8 2-1.7 2.6l-6.7 4.4-.8.3z"/>
+    </svg>
+);
+
+const AngularIcon = () => (
+    <svg viewBox="0 0 32 32" width="28" height="28">
+        <path fill="#DD0031" d="M16 2L2 7l2.1 18.2L16 30l11.9-4.8L30 7L16 2z"/>
+        <path fill="#C3002F" d="M16 2v28l11.9-4.8L30 7L16 2z"/>
+        <path fill="#fff" d="M16 5.8L8.2 23h2.9l1.6-4h6.6l1.6 4h2.9L16 5.8zm2.2 11h-4.4L16 11.4l2.2 5.4z"/>
+    </svg>
+);
+
+const SolidIcon = () => (
+    <svg viewBox="0 0 32 32" width="28" height="28">
+        <path fill="#76B3E1" d="M5 10l11-6 11 6-11 6-11-6z"/>
+        <path fill="#2C4F7C" d="M27 10v12l-11 6V16l11-6z"/>
+        <path fill="#335D92" d="M5 10v12l11 6V16L5 10z"/>
+    </svg>
+);
+
+const PreactIcon = () => (
+    <svg viewBox="0 0 32 32" width="28" height="28">
+        <circle cx="16" cy="16" r="2.5" fill="#673AB8"/>
+        <ellipse cx="16" cy="16" rx="10" ry="4" fill="none" stroke="#673AB8" strokeWidth="1"/>
+        <ellipse cx="16" cy="16" rx="10" ry="4" fill="none" stroke="#673AB8" strokeWidth="1" transform="rotate(60 16 16)"/>
+        <ellipse cx="16" cy="16" rx="10" ry="4" fill="none" stroke="#673AB8" strokeWidth="1" transform="rotate(120 16 16)"/>
+    </svg>
+);
+
+const AstroIcon = () => (
+    <svg viewBox="0 0 32 32" width="28" height="28">
+        <path fill="#FF5D01" d="M8 22c0-3 2-5.5 5-6-1.5 2-2 4-1.5 6.5.5-1 1.5-1.5 2.5-1.5 2.5 0 4 2 4 4.5 0 .5-.1 1-.2 1.5 3-1.5 5.2-4.5 5.2-8 0-5-4-9-9-9l-1.5 6L10 9c-3.5 4-4 9-2 13z"/>
+        <path fill="#1D1F21" d="M12 26c-.5 1.5-.3 3 .5 4.2 1.5-.5 2.8-1.5 3.5-2.7-.5-.3-1-.5-1.5-.5-1 0-2 .5-2.5 1z"/>
+    </svg>
+);
+
+const QwikIcon = () => (
+    <svg viewBox="0 0 32 32" width="28" height="28">
+        <path fill="#18B6F6" d="M16 4L4 10v12l12 6 12-6V10L16 4z"/>
+        <path fill="#fff" d="M16 8l-8 4v8l8 4 8-4v-8l-8-4zm0 2.5l5.5 2.75v5.5L16 21.5l-5.5-2.75v-5.5L16 10.5z"/>
+        <path fill="#AC7EF4" d="M16 13v8l5.5-2.75v-5.5L16 13z"/>
+    </svg>
+);
+
+const LitIcon = () => (
+    <svg viewBox="0 0 32 32" width="28" height="28">
+        <path fill="#325CFF" d="M8 8l8-4 8 4v8l-8 12-8-12V8z"/>
+        <path fill="#00E8FF" d="M16 4l8 4v8l-8 12V4z"/>
+    </svg>
+);
+
 const FrameworkIconComponent = ({ framework }: { framework: FrameworkType }) => {
     switch (framework) {
         case 'vanilla':
@@ -90,6 +162,20 @@ const FrameworkIconComponent = ({ framework }: { framework: FrameworkType }) => 
             return <ReactIcon />;
         case 'vue':
             return <VueIcon />;
+        case 'svelte':
+            return <SvelteIcon />;
+        case 'angular':
+            return <AngularIcon />;
+        case 'solid':
+            return <SolidIcon />;
+        case 'preact':
+            return <PreactIcon />;
+        case 'astro':
+            return <AstroIcon />;
+        case 'qwik':
+            return <QwikIcon />;
+        case 'lit':
+            return <LitIcon />;
         default:
             return null;
     }
@@ -678,8 +764,8 @@ const SectionTitle = styled.h3`
 
 const FrameworkGrid = styled.div`
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.75rem;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
 `;
 
 const FrameworkButton = styled.button<{ $isSelected: boolean }>`
@@ -687,15 +773,15 @@ const FrameworkButton = styled.button<{ $isSelected: boolean }>`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    padding: 1rem 0.75rem;
-    border-radius: 12px;
+    gap: 0.375rem;
+    padding: 0.625rem 0.375rem;
+    border-radius: 10px;
     border: 2px solid ${({ $isSelected }) => ($isSelected ? 'var(--c-primary)' : 'var(--c-border)')};
     background: ${({ $isSelected }) => ($isSelected ? 'var(--c-primary-soft)' : 'transparent')};
     color: ${({ $isSelected }) => ($isSelected ? 'var(--c-primary)' : 'var(--c-text-secondary)')};
     cursor: pointer;
     transition: all 0.2s;
-    font-size: 0.85rem;
+    font-size: 0.7rem;
     font-weight: 500;
 
     &:hover {
@@ -705,25 +791,30 @@ const FrameworkButton = styled.button<{ $isSelected: boolean }>`
 
     svg {
         flex-shrink: 0;
+        width: 22px;
+        height: 22px;
     }
 `;
 
 const StyleGrid = styled.div`
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.75rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
 `;
 
 const StyleButton = styled.button<{ $isSelected: boolean }>`
-    padding: 0.75rem 0.5rem;
-    border-radius: 12px;
+    padding: 0.5rem 0.375rem;
+    border-radius: 8px;
     border: 2px solid ${({ $isSelected }) => ($isSelected ? 'var(--c-primary)' : 'var(--c-border)')};
     background: ${({ $isSelected }) => ($isSelected ? 'var(--c-primary-soft)' : 'transparent')};
     color: ${({ $isSelected }) => ($isSelected ? 'var(--c-primary)' : 'var(--c-text-secondary)')};
     cursor: pointer;
     transition: all 0.2s;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     &:hover {
         border-color: var(--c-primary);

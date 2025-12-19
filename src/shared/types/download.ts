@@ -1,8 +1,34 @@
 // Framework types
-export type FrameworkType = 'vanilla' | 'react' | 'vue';
+export type FrameworkType =
+    | 'vanilla'
+    | 'react'
+    | 'vue'
+    | 'svelte'
+    | 'angular'
+    | 'solid'
+    | 'preact'
+    | 'astro'
+    | 'qwik'
+    | 'lit';
 
 // Style types
-export type StyleType = 'css' | 'scss' | 'styled-components' | 'emotion' | 'tailwind';
+export type StyleType =
+    | 'css'
+    | 'scss'
+    | 'styled-components'
+    | 'emotion'
+    | 'tailwind'
+    | 'css-modules'
+    | 'unocss'
+    | 'panda-css'
+    | 'vanilla-extract'
+    | 'stitches'
+    | 'less'
+    | 'stylus'
+    | 'bootstrap'
+    | 'bulma'
+    | 'chakra-ui'
+    | 'mui';
 
 // Responsive breakpoint types
 export type ResponsiveBreakpoint = 'mobile' | 'tablet' | 'desktop';
