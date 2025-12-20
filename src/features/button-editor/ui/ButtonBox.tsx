@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { ButtonSetModal } from './ButtonSetModal';
-import { BTN_STYLE, ANIMATED_BTN_STYLES } from '@/shared/constants';
+import { BTN_STYLE, SIMPLE_BTN_STYLES, GRADIENT_BTN_STYLES, ANIMATED_BTN_STYLES } from '@/shared/constants';
 import { useElementsStore } from '@/shared/store';
 import { ButtonStyle, AnimatedBtnStyle } from '@/shared/types';
 import { SimpleBtn, GradationBtn, BounceBtn, GlowBtn, PulseBtn, ShakeBtn, SlideBtn, RippleBtn } from '@/entities/button';
@@ -30,77 +30,93 @@ export function ButtonBox() {
         });
     };
 
-    const simpleStyle = BTN_STYLE['SimpleBtn'];
-    const gradationStyle = BTN_STYLE['GradationBtn'];
-
     return (
         <ButtonBoxStyle>
+            {/* Simple Buttons */}
             <CategoryLabel>{t('editor.simpleButtons')}</CategoryLabel>
-            <ButtonWrapper $delay={0} onClick={() => setSelectedBtn('SimpleBtn')}>
-                <SimpleBtn
-                    $backgroundColor={simpleStyle.backgroundColor}
-                    $textColor={simpleStyle.textColor}
-                    $borderRadius={Number(simpleStyle.borderRadius)}
-                    style={{
-                        borderWidth: `${simpleStyle.borderWidth}px`,
-                        borderStyle: 'solid',
-                        borderColor: simpleStyle.borderColor,
-                        boxShadow: `${simpleStyle.shadowOffsetX}px ${simpleStyle.shadowOffsetY}px ${simpleStyle.shadowBlurRadius}px ${simpleStyle.shadowColor}`,
-                        padding: '0.5rem 1rem',
-                        fontSize: '0.875rem',
-                    }}
-                >
-                    {simpleStyle.buttonText}
-                </SimpleBtn>
-            </ButtonWrapper>
+            <ButtonGrid>
+                {SIMPLE_BTN_STYLES.map((styleName, index) => {
+                    const style = BTN_STYLE[styleName];
+                    return (
+                        <ButtonWrapper key={styleName} $delay={index * 30} onClick={() => setSelectedBtn(styleName)}>
+                            <SimpleBtn
+                                $backgroundColor={style.backgroundColor}
+                                $textColor={style.textColor}
+                                $borderRadius={Number(style.borderRadius)}
+                                style={{
+                                    borderWidth: `${style.borderWidth}px`,
+                                    borderStyle: 'solid',
+                                    borderColor: style.borderColor,
+                                    boxShadow: `${style.shadowOffsetX}px ${style.shadowOffsetY}px ${style.shadowBlurRadius}px ${style.shadowColor}`,
+                                    padding: '0.5rem 1rem',
+                                    fontSize: '0.75rem',
+                                }}
+                            >
+                                {style.buttonText}
+                            </SimpleBtn>
+                        </ButtonWrapper>
+                    );
+                })}
+            </ButtonGrid>
 
+            {/* Gradient Buttons */}
             <CategoryLabel>{t('editor.gradientButtons')}</CategoryLabel>
-            <ButtonWrapper $delay={50} onClick={() => setSelectedBtn('GradationBtn')}>
-                <GradationBtn
-                    $textColor={gradationStyle.textColor}
-                    $gradationColor1={gradationStyle.gradationColor1}
-                    $gradationColor2={gradationStyle.gradationColor2}
-                    $gradationColor3={gradationStyle.gradationColor3}
-                    $gradationColor4={gradationStyle.gradationColor4}
-                    $borderRadius={Number(gradationStyle.borderRadius)}
-                    style={{
-                        borderWidth: `${gradationStyle.borderWidth}px`,
-                        borderStyle: 'solid',
-                        borderColor: gradationStyle.borderColor,
-                        boxShadow: `${gradationStyle.shadowOffsetX}px ${gradationStyle.shadowOffsetY}px ${gradationStyle.shadowBlurRadius}px ${gradationStyle.shadowColor}`,
-                        padding: '0.5rem 1rem',
-                        fontSize: '0.875rem',
-                    }}
-                >
-                    {gradationStyle.buttonText}
-                </GradationBtn>
-            </ButtonWrapper>
+            <ButtonGrid>
+                {GRADIENT_BTN_STYLES.map((styleName, index) => {
+                    const style = BTN_STYLE[styleName];
+                    return (
+                        <ButtonWrapper key={styleName} $delay={330 + index * 30} onClick={() => setSelectedBtn(styleName)}>
+                            <GradationBtn
+                                $textColor={style.textColor}
+                                $gradationColor1={style.gradationColor1}
+                                $gradationColor2={style.gradationColor2}
+                                $gradationColor3={style.gradationColor3}
+                                $gradationColor4={style.gradationColor4}
+                                $borderRadius={Number(style.borderRadius)}
+                                style={{
+                                    borderWidth: `${style.borderWidth}px`,
+                                    borderStyle: 'solid',
+                                    borderColor: style.borderColor,
+                                    boxShadow: `${style.shadowOffsetX}px ${style.shadowOffsetY}px ${style.shadowBlurRadius}px ${style.shadowColor}`,
+                                    padding: '0.5rem 1rem',
+                                    fontSize: '0.75rem',
+                                }}
+                            >
+                                {style.buttonText}
+                            </GradationBtn>
+                        </ButtonWrapper>
+                    );
+                })}
+            </ButtonGrid>
 
+            {/* Animated Buttons */}
             <CategoryLabel>{t('editor.animatedButtons')}</CategoryLabel>
-            {ANIMATED_BTN_STYLES.map((styleName, index) => {
-                const style = BTN_STYLE[styleName];
-                const Component = AnimatedComponents[styleName as AnimatedBtnStyle];
-                return (
-                    <ButtonWrapper key={styleName} $delay={100 + index * 50} onClick={() => setSelectedBtn(styleName)}>
-                        <Component
-                            $backgroundColor={style.backgroundColor}
-                            $textColor={style.textColor}
-                            $borderRadius={Number(style.borderRadius)}
-                            $secondaryColor={style.secondaryColor}
-                            style={{
-                                borderWidth: `${style.borderWidth}px`,
-                                borderStyle: 'solid',
-                                borderColor: style.borderColor,
-                                boxShadow: `${style.shadowOffsetX}px ${style.shadowOffsetY}px ${style.shadowBlurRadius}px ${style.shadowColor}`,
-                                padding: '0.5rem 1rem',
-                                fontSize: '0.875rem',
-                            }}
-                        >
-                            {style.buttonText}
-                        </Component>
-                    </ButtonWrapper>
-                );
-            })}
+            <ButtonGrid>
+                {ANIMATED_BTN_STYLES.map((styleName, index) => {
+                    const style = BTN_STYLE[styleName];
+                    const Component = AnimatedComponents[styleName as AnimatedBtnStyle];
+                    return (
+                        <ButtonWrapper key={styleName} $delay={630 + index * 30} onClick={() => setSelectedBtn(styleName)}>
+                            <Component
+                                $backgroundColor={style.backgroundColor}
+                                $textColor={style.textColor}
+                                $borderRadius={Number(style.borderRadius)}
+                                $secondaryColor={style.secondaryColor}
+                                style={{
+                                    borderWidth: `${style.borderWidth}px`,
+                                    borderStyle: 'solid',
+                                    borderColor: style.borderColor,
+                                    boxShadow: `${style.shadowOffsetX}px ${style.shadowOffsetY}px ${style.shadowBlurRadius}px ${style.shadowColor}`,
+                                    padding: '0.5rem 1rem',
+                                    fontSize: '0.75rem',
+                                }}
+                            >
+                                {style.buttonText}
+                            </Component>
+                        </ButtonWrapper>
+                    );
+                })}
+            </ButtonGrid>
 
             {selected?.type === 'button' && (
                 <ButtonSetModal
@@ -116,6 +132,12 @@ const ButtonBoxStyle = styled.article`
     display: flex;
     flex-direction: column;
     gap: 1rem;
+`;
+
+const ButtonGrid = styled.div`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
 `;
 
 const popIn = keyframes`

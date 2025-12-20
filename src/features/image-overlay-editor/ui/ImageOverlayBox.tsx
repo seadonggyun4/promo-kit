@@ -1,11 +1,13 @@
 import styled, { keyframes } from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { ImageOverlaySetModal } from './ImageOverlaySetModal';
-import { IMAGE_OVERLAY_STYLE } from '@/shared/constants';
+import { IMAGE_OVERLAY_STYLE, SIMPLE_IMAGE_STYLES, FRAMED_IMAGE_STYLES, DECORATIVE_IMAGE_STYLES } from '@/shared/constants';
 import { useElementsStore } from '@/shared/store';
 import { ImageOverlayStyle } from '@/shared/types';
 import { ImageOverlayContainer } from '@/entities/image-overlay';
 
 export function ImageOverlayBox() {
+    const { t } = useTranslation();
     const { selected, setSelected } = useElementsStore();
 
     const setSelectedImage = (style: ImageOverlayStyle) => {
@@ -19,32 +21,56 @@ export function ImageOverlayBox() {
         });
     };
 
-    const simpleStyle = IMAGE_OVERLAY_STYLE['SimpleImage'];
-    const roundedStyle = IMAGE_OVERLAY_STYLE['RoundedImage'];
+    const renderImagePreset = (styleName: string, index: number, baseDelay: number) => {
+        const style = IMAGE_OVERLAY_STYLE[styleName];
+        const displayName = styleName.replace(/([A-Z])/g, ' $1').trim();
+        return (
+            <ImageWrapper
+                key={styleName}
+                $delay={baseDelay + index * 30}
+                onClick={() => setSelectedImage(styleName as ImageOverlayStyle)}
+            >
+                <ImageOverlayContainer
+                    $borderRadius={Number(style.borderRadius)}
+                    $borderWidth={Number(style.borderWidth)}
+                    $borderColor={style.borderColor}
+                    $shadowOffsetX={Number(style.shadowOffsetX)}
+                    $shadowOffsetY={Number(style.shadowOffsetY)}
+                    $shadowBlurRadius={Number(style.shadowBlurRadius)}
+                    $shadowColor={style.shadowColor}
+                    style={{ width: '100%', height: '60px', fontSize: '0.7rem' }}
+                >
+                    {displayName}
+                </ImageOverlayContainer>
+            </ImageWrapper>
+        );
+    };
 
     return (
         <ImageOverlayBoxStyle>
-            <ImageWrapper $delay={0} onClick={() => setSelectedImage('SimpleImage')}>
-                <ImageOverlayContainer
-                    $borderRadius={Number(simpleStyle.borderRadius)}
-                    $borderWidth={Number(simpleStyle.borderWidth)}
-                    $borderColor={simpleStyle.borderColor}
-                    style={{ width: '100%', height: '80px' }}
-                >
-                    Simple Image
-                </ImageOverlayContainer>
-            </ImageWrapper>
+            {/* Simple Images */}
+            <CategoryLabel>{t('editor.simpleImages')}</CategoryLabel>
+            <ImageGrid>
+                {SIMPLE_IMAGE_STYLES.map((styleName, index) =>
+                    renderImagePreset(styleName, index, 0)
+                )}
+            </ImageGrid>
 
-            <ImageWrapper $delay={50} onClick={() => setSelectedImage('RoundedImage')}>
-                <ImageOverlayContainer
-                    $borderRadius={Number(roundedStyle.borderRadius)}
-                    $borderWidth={Number(roundedStyle.borderWidth)}
-                    $borderColor={roundedStyle.borderColor}
-                    style={{ width: '100%', height: '80px' }}
-                >
-                    Rounded Image
-                </ImageOverlayContainer>
-            </ImageWrapper>
+            {/* Framed Images */}
+            <CategoryLabel>{t('editor.framedImages')}</CategoryLabel>
+            <ImageGrid>
+                {FRAMED_IMAGE_STYLES.map((styleName, index) =>
+                    renderImagePreset(styleName, index, 120)
+                )}
+            </ImageGrid>
+
+            {/* Decorative Images */}
+            <CategoryLabel>{t('editor.decorativeImages')}</CategoryLabel>
+            <ImageGrid>
+                {DECORATIVE_IMAGE_STYLES.map((styleName, index) =>
+                    renderImagePreset(styleName, index, 240)
+                )}
+            </ImageGrid>
 
             {selected?.type === 'image-overlay' && (
                 <ImageOverlaySetModal
@@ -60,6 +86,25 @@ const ImageOverlayBoxStyle = styled.article`
     display: flex;
     flex-direction: column;
     gap: 1rem;
+`;
+
+const ImageGrid = styled.div`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+`;
+
+const CategoryLabel = styled.span`
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--c-text-secondary, #6b7280);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.5rem;
+
+    &:first-child {
+        margin-top: 0;
+    }
 `;
 
 const popIn = keyframes`
