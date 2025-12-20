@@ -1,6 +1,10 @@
+```markdown
 <img width="500" height="500" alt="logo" src="https://github.com/user-attachments/assets/004f2951-75ae-4a8a-818f-8e6dd7fe77aa" />
 
 # PromoKit
+
+![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fseadonggyun4%2Fpromo-kit&count_bg=%2379C83D&title_bg=%23555555&icon=&emoji=&title=views&edge_flat=false)
+![License](https://img.shields.io/github/license/seadonggyun4/promo-kit)
 
 **이벤트 랜딩 페이지, 5분이면 충분합니다.** HTML/CSS 작성하고 버튼 좌표 조정하는 반복 작업을 끝내세요.
 <br/>
@@ -176,3 +180,4 @@ src/
 ## 라이선스
 
 MIT
+```
