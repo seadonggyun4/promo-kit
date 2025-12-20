@@ -1,4 +1,3 @@
-```markdown
 <img width="500" height="500" alt="logo" src="https://github.com/user-attachments/assets/004f2951-75ae-4a8a-818f-8e6dd7fe77aa" />
 
 # PromoKit
