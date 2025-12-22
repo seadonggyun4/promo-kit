@@ -2,8 +2,7 @@
 
 # PromoKit
 
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fseadonggyun4%2Fpromo-kit&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
-
+[![Hits](https://hitscounter.dev/api/hit?url=https://github.com/seadonggyun4/promo-kit&label=hits&color=79C83D&labelColor=555555)](https://hitscounter.dev)
 ![License](https://img.shields.io/github/license/seadonggyun4/promo-kit)
 
 **이벤트 랜딩 페이지, 5분이면 충분합니다.** HTML/CSS 작성하고 버튼 좌표 조정하는 반복 작업을 끝내세요.
