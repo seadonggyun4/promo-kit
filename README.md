@@ -1,4 +1,4 @@
-<img width="500" height="500" alt="logo" src="https://github.com/user-attachments/assets/004f2951-75ae-4a8a-818f-8e6dd7fe77aa" />
+<img width="500" height="500" alt="logo" src="https://github.com/user-attachments/assets/46d07e5a-7201-436a-a6e0-00b9f7f2e6c7" />
 
 # PromoKit
 
